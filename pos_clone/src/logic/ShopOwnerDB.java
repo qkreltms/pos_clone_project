@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class OrderDB {
+public class ShopOwnerDB {
 	Connection con;
 	PreparedStatement preparedStatement;
 	ResultSet cursor;
@@ -21,15 +21,13 @@ public class OrderDB {
 			cursor = preparedStatement.executeQuery();
 			
 			System.out.println("=============" + dbName + "=============");
-			System.out.println("orderId\tcustId\tmenuId\torderPrice\tdate");
+			System.out.println("id\tname\tphoneNum");
 			while(cursor.next()) {
-				int orderId = cursor.getInt(1);
-				int custId = cursor.getInt(2);
-				int menuId = cursor.getInt(3);
-				int orderPrice = cursor.getInt(4);
-				Date date = cursor.getDate(5);
+				int id = cursor.getInt(1);
+				String name = cursor.getString(2);
+				String phoneNum = cursor.getString(3);				
 				
-				String result = orderId + "\t" + custId + "\t" + menuId + "\t" + orderPrice + "\t\t" + date;
+				String result = id + "\t" + name + "\t" + phoneNum;
 				System.out.println(result);	
 			}
 		} catch (SQLException e) {

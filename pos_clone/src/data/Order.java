@@ -4,11 +4,11 @@ import java.sql.Date;
 
 public class Order {
 	private int orderId;
-	private int orderPrice;
-	private Date orderDate;
 	private int custId;
 	private int MenuId;
-	
+	private int orderPrice;
+	private Date orderDate;
+
 	public int getOrderId() {
 		return orderId;
 	}

@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-	static String userId = "madang";
-	static String pwd = "madang";
+	static String userId = "system";
+	static String pwd = "111111";
 	static String dbName = "orcl";
 	static String jdbcLocation = "oracle.jdbc.driver.OracleDriver";
 	
