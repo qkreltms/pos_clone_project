@@ -1,21 +1,26 @@
 package data;
 
 public class ShopOwner {
-	private int shopOwnerPhoneNumber;
-	private String shopName;
+	private int shopOwnerId;
+	private String shopOwnerPhoneNumber;
 	private String shopOwnerName;
 	
-	public int getShopOwnerPhoneNumber() {
+	public ShopOwner(int shopOwnerId, String shopOwnerPhoneNumber, String shopOwnerName) {
+		this.shopOwnerId = shopOwnerId;
+		this.shopOwnerPhoneNumber = shopOwnerPhoneNumber;
+		this.shopOwnerName = shopOwnerName;
+	}
+	public int getShopOwnerId() {
+		return shopOwnerId;
+	}
+	public void setShopOwnerId(int shopOwnerId) {
+		this.shopOwnerId = shopOwnerId;
+	}
+	public String getShopOwnerPhoneNumber() {
 		return shopOwnerPhoneNumber;
 	}
-	public void setShopOwnerPhoneNumber(int shopOwnerPhoneNumber) {
+	public void setShopOwnerPhoneNumber(String shopOwnerPhoneNumber) {
 		this.shopOwnerPhoneNumber = shopOwnerPhoneNumber;
-	}
-	public String getShopName() {
-		return shopName;
-	}
-	public void setShopName(String shopName) {
-		this.shopName = shopName;
 	}
 	public String getShopOwnerName() {
 		return shopOwnerName;

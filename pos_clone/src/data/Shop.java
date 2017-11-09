@@ -5,6 +5,11 @@ public class Shop {
 	private String shopName;
 	private int shopOwnerId;
 	
+	public Shop(int shopId, String shopName, int shopOwnerId) {
+		this.shopId = shopId;
+		this.shopName = shopName;
+		this.shopOwnerId = shopOwnerId;
+	}
 	public int getShopId() {
 		return shopId;
 	}

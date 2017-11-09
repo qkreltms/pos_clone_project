@@ -5,7 +5,13 @@ public class Menu {
 	private String menuName;
 	private int menuPrice;
 	private int shopId;
-	
+
+	public Menu(int menuId, String menuName, int menuPrice,  int shopId) {
+		this.menuId = menuId;
+		this.menuName = menuName;
+		this.menuPrice = menuPrice;
+		this.shopId = shopId;
+	}
 	public int getMenuId() {
 		return menuId;
 	}

@@ -8,7 +8,14 @@ public class Order {
 	private int MenuId;
 	private int orderPrice;
 	private Date orderDate;
-
+	
+	public Order(int orderId, int custId, int MenuId, int orderPrice, Date orderDate) {
+		this.orderId = orderId;
+		this.custId = custId;
+		this.MenuId = MenuId;
+		this.orderPrice = orderPrice;
+		this.orderDate = orderDate;
+	}
 	public int getOrderId() {
 		return orderId;
 	}

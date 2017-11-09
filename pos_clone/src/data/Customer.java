@@ -3,9 +3,15 @@ package data;
 public class Customer {
 	private int custId;
 	private String custName;
-	private int custPhoneNumber;
-	private int custCardNumber;
+	private String custPhoneNumber;
+	private String custCardNumber;
 	
+	public Customer(int custId, String custName, String custPhoneNumber, String custCardNumber) {
+		this.custId = custId;
+		this.custName = custName;
+		this.custPhoneNumber = custPhoneNumber;
+		this.custCardNumber = custCardNumber;
+	}
 	public int getCustId() {
 		return custId;
 	}
@@ -18,16 +24,16 @@ public class Customer {
 	public void setCustName(String custName) {
 		this.custName = custName;
 	}
-	public int getCustPhoneNumber() {
+	public String getCustPhoneNumber() {
 		return custPhoneNumber;
 	}
-	public void setCustPhoneNumber(int custPhoneNumber) {
+	public void setCustPhoneNumber(String custPhoneNumber) {
 		this.custPhoneNumber = custPhoneNumber;
 	}
-	public int getCustCardNumber() {
+	public String getCustCardNumber() {
 		return custCardNumber;
 	}
-	public void setCustCardNumber(int custCardNumber) {
+	public void setCustCardNumber(String custCardNumber) {
 		this.custCardNumber = custCardNumber;
 	}
 
