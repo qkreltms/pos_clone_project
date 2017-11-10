@@ -1,5 +1,3 @@
-//http://all-record.tistory.com/69 참고
-
 package logic;
 
 import java.sql.Connection;
@@ -14,52 +12,44 @@ import data.CustDataProvider;
 import data.Customer;
 
 public class CustomerDB implements CustDataProvider{
-	Connection con;
-	PreparedStatement preparedStatement;
-	ResultSet cursor;
-	String dbName = "Customer";
-	ArrayList<Customer> custList;
-	Customer customer;
-	
+	private Connection con;
+	public final static String dbName = "Customer";
+	private ArrayList<Customer> custList;
+
 	public CustomerDB() {
-		custList = new ArrayList<>();
+		con = DBConnection.connect();
 	}
 	
-	public ArrayList<Customer> getAllData() {
-		try {
-			con = DBConnection.connect();
-
-			String query = "SELECT * FROM "+dbName;
-			preparedStatement = con.prepareStatement(query);
-			cursor = preparedStatement.executeQuery();
-			
-			
-			System.out.println("=============" + dbName + "=============");
-			System.out.println("id\tname\tphone_num\tcard_num");
-			while(cursor.next()) {
+	@Override
+	public ArrayList<Customer> getAllData() throws SQLException {
+		return select("SELECT * FROM "+dbName); 
+	}
+	
+	public ArrayList<Customer> select(String query) throws SQLException {
+		PreparedStatement preparedStatement = con.prepareStatement(query);
+		ResultSet cursor = preparedStatement.executeQuery();
+		custList = new ArrayList<>();
+		
+		System.out.println("=============" + dbName + "=============");
+		System.out.println("id\tname\tphone_num\tcard_num");
+		while(cursor.next()) {
+			if (cursor.wasNull()) {
+				System.out.println(dbName + "DB에 아무런 값이 들어있지 않습니다.");
+			} else {
 				int id = cursor.getInt(1);
 				String name = cursor.getString(2);
 				String phoneNum = cursor.getString(3);
 				String cardNum = cursor.getString(4);
+			
+				custList.add(new Customer(id, name, phoneNum, cardNum));
 				String result = id + "\t" + name + "\t" + phoneNum + "\t" + cardNum;
 				System.out.println(result);
-
-				if (!cursor.wasNull()) {
-					custList.add(new Customer(id, name, phoneNum, cardNum));
-				}
-			}
-		} catch (SQLException e) {
-			System.out.println("sql문 에러 발생. query를 확인해주세요.");
-			e.printStackTrace();
-		} finally {
-			try { 
-				con.close(); 
-				preparedStatement.close();
-				cursor.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 		}
+
+		con.close(); 
+		preparedStatement.close();
+		cursor.close();
 
 		return custList;
 	}
