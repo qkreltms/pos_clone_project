@@ -1,8 +1,5 @@
 package main;
 
-import java.sql.Date;
-import java.sql.SQLException;
-
 import data.DataProvider;
 import data.Order;
 
