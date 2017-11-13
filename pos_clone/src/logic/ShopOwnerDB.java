@@ -1,56 +1,85 @@
 package logic;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-import data.Customer;
+import data.DataProvider;
 import data.ShopOwner;
-import data.ShopOwnerDataProvider;
 
-public class ShopOwnerDB implements ShopOwnerDataProvider{
+public class ShopOwnerDB extends DatabaseBuilder implements DataProvider{
 	private Connection con;
 	public static String dbName = "Shop_owner";
-	private ArrayList<ShopOwner> custList;
+	private String columShopOwnerId = "shop_owner_id";
+	private String columShopOwnerName = "shop_owner_name";
+	private String columShopOwnerPhoneNum = "shop_owner_phone_num";
+	
+	private ArrayList<ShopOwner> list;
 
 	public ShopOwnerDB() {
 		con = DBConnection.connect();
 	}
 	
+	public ArrayList<ShopOwner> findOwnerById (String id) throws SQLException{
+		return select("SELECT * FROM "+ dbName + " WHERE " + columShopOwnerId + " = " + id);
+	}
+	
 	@Override
 	public ArrayList<ShopOwner> getAllData() throws SQLException {
-		return select("SELECT * FROM "+dbName); 
+		return select("SELECT * FROM "+ dbName); 
 	}
-
+	
+	@Override
 	public ArrayList<ShopOwner> select(String query) throws SQLException {
 		PreparedStatement preparedStatement = con.prepareStatement(query);
 		ResultSet cursor = preparedStatement.executeQuery();
-		custList = new ArrayList<>();
-		
+		list = new ArrayList<>();
+
 		System.out.println("=============" + dbName + "=============");
 		System.out.println("id\tname\tphoneNum");
 		while(cursor.next()) {
-			if (cursor.wasNull()) {
-				System.out.println(dbName + "DB에 아무런 값이 들어있지 않습니다.");
-			} else {
-				int id = cursor.getInt(1);
-				String name = cursor.getString(2);
-				String phoneNum = cursor.getString(3);				
-			
-				custList.add(new ShopOwner(id, name, phoneNum));
+			int id = cursor.getInt(1);
+			String name = cursor.getString(2);
+			String phoneNum = cursor.getString(3);				
+
+			if (!cursor.wasNull()) {
+				list.add(new ShopOwner(id, name, phoneNum));
 				String result = id + "\t" + name + "\t" + phoneNum;
 				System.out.println(result);
 			}
 		}
-
-		con.close(); 
+//		con.close(); 
 		preparedStatement.close();
 		cursor.close();
 
-		return custList;
+		return list;
 	}
 
+	@Override
+	public boolean update(String query) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ArrayList<?> delete(String query) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean insert(Object o) throws SQLException {
+		ShopOwner e = (ShopOwner) o;
+		if (e == null) return false;
+		Statement statement = con.createStatement();
+		String query = "insert into shop_owner values (shop_owner_s.nextval, " 
+				+ "'" + e.getShopOwnerName() +"'" + ","
+				+ "'" + e.getShopOwnerPhoneNumber() + "'" + ")";
+		
+		if (statement.executeUpdate(query) == 1) return true;
+		else return false;
+	}
 }

@@ -6,42 +6,45 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import data.CustDataProvider;
 import data.Customer;
+import data.DataProvider;
 
-public class CustomerDB implements CustDataProvider{
+public class CustomerDB extends DatabaseBuilder implements DataProvider{
 	private Connection con;
 	public final static String dbName = "Customer";
-	private ArrayList<Customer> custList;
+	private String columCustomerId = "customer_id";
+	private ArrayList<Customer> list;
 
 	public CustomerDB() {
 		con = DBConnection.connect();
 	}
 	
+	public ArrayList<Customer> findOwnerById (String id) throws SQLException{
+		return select("SELECT * FROM "+ dbName + " WHERE " + columCustomerId + " = " + id);
+	}
+
 	@Override
 	public ArrayList<Customer> getAllData() throws SQLException {
 		return select("SELECT * FROM "+dbName); 
 	}
-	
+
+	@Override
 	public ArrayList<Customer> select(String query) throws SQLException {
 		PreparedStatement preparedStatement = con.prepareStatement(query);
 		ResultSet cursor = preparedStatement.executeQuery();
-		custList = new ArrayList<>();
-		
+		list = new ArrayList<>();
+
 		System.out.println("=============" + dbName + "=============");
 		System.out.println("id\tname\tphone_num\tcard_num");
 		while(cursor.next()) {
-			if (cursor.wasNull()) {
-				System.out.println(dbName + "DB에 아무런 값이 들어있지 않습니다.");
-			} else {
-				int id = cursor.getInt(1);
-				String name = cursor.getString(2);
-				String phoneNum = cursor.getString(3);
-				String cardNum = cursor.getString(4);
-			
-				custList.add(new Customer(id, name, phoneNum, cardNum));
+			int id = cursor.getInt(1);
+			String name = cursor.getString(2);
+			String phoneNum = cursor.getString(3);
+			String cardNum = cursor.getString(4);
+
+			if (!cursor.wasNull()) {
+				list.add(new Customer(id, name, phoneNum, cardNum));
 				String result = id + "\t" + name + "\t" + phoneNum + "\t" + cardNum;
 				System.out.println(result);
 			}
@@ -51,6 +54,33 @@ public class CustomerDB implements CustDataProvider{
 		preparedStatement.close();
 		cursor.close();
 
-		return custList;
+		return list;
 	}
+
+	@Override
+	public ArrayList<?> delete(String query) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean update(String query) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean insert(Object o) throws SQLException {
+		Customer e = (Customer) o;
+		if (e == null) return false;
+		Statement statement = con.createStatement();
+		String query = "insert into customer values (customer_s.nextval, " 
+				+ "'" + e.getCustName() +"'" + ","
+				+ "'" + e.getCustPhoneNumber() +"'" + ","
+				+ "'" + e.getCustCardNumber() + "'" + ")";
+		
+		if (statement.executeUpdate(query) == 1) return true;
+		else return false;
+	}
+
 }	

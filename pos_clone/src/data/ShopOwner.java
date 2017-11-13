@@ -5,8 +5,12 @@ public class ShopOwner {
 	private String shopOwnerPhoneNumber;
 	private String shopOwnerName;
 	
-	public ShopOwner(int shopOwnerId, String shopOwnerPhoneNumber, String shopOwnerName) {
+	public ShopOwner(int shopOwnerId, String shopOwnerName, String shopOwnerPhoneNumber) {
 		this.shopOwnerId = shopOwnerId;
+		this.shopOwnerPhoneNumber = shopOwnerPhoneNumber;
+		this.shopOwnerName = shopOwnerName;
+	}
+	public ShopOwner(String shopOwnerName, String shopOwnerPhoneNumber) {
 		this.shopOwnerPhoneNumber = shopOwnerPhoneNumber;
 		this.shopOwnerName = shopOwnerName;
 	}

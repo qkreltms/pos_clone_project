@@ -4,42 +4,49 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+import data.DataProvider;
 import data.Shop;
-import data.ShopDataProvider;
 
-public class ShopDB implements ShopDataProvider{
+public class ShopDB extends DatabaseBuilder implements DataProvider{
 	private Connection con;
 	public final static String dbName = "Shop";
-	private ArrayList<Shop> custList;
+	private String columShopId = "shop_id";
+	private String columShopOwnerId = "shop_owner_id";
+	private String columShopName = "shop_name";	
+	private ArrayList<Shop> list;
 
 	public ShopDB() {
 		con = DBConnection.connect();
 	}
-
+	
+	public ArrayList<Shop> findOwnerById (String id) throws SQLException{
+		return select("SELECT * FROM "+ dbName + " WHERE " + columShopId + " = " + id);
+	}
+	
 	@Override
 	public ArrayList<Shop> getAllData() throws SQLException {
-		return select("SELECT * FROM " + ShopOwnerDB.dbName + " ow, " + dbName + " sh WHERE sh.shop_owner_id = ow.shop_owner_id"); 
+		return select("SELECT * FROM " + dbName); 
 	}
-
+	
+	@Override
 	public ArrayList<Shop> select(String query) throws SQLException {
 		PreparedStatement preparedStatement = con.prepareStatement(query);
 		ResultSet cursor = preparedStatement.executeQuery();
-		custList = new ArrayList<>();
+		list = new ArrayList<>();
 
 		System.out.println("=============" + dbName + "=============");
-		System.out.println("shopId\townerId\tshopName\townerName\townerPhoneNum");
+		System.out.println("shopId\townerId\tshopName");
 		while(cursor.next()) {
 			int shopId = cursor.getInt(1);
-			String ownerName = cursor.getString(2);
-			String ownerPhoneNum = cursor.getString(3);
-			int ownerId = cursor.getInt(4);
-			String shopName = cursor.getString(6);
+			int ownerId = cursor.getInt(2);
+			String shopName = cursor.getString(3);
 
 			if (!cursor.wasNull()) {
-				custList.add(new Shop(shopId, ownerId, shopName, ownerName, ownerPhoneNum));
-				String result = shopId + "\t" + ownerId + "\t" + shopName +"\t\t" + ownerName + "\t\t" + ownerPhoneNum;
+				list.add(new Shop(shopId, ownerId, shopName));
+				String result = shopId + "\t" + ownerId + "\t" + shopName;
 				System.out.println(result);	
 			}
 		}
@@ -48,6 +55,32 @@ public class ShopDB implements ShopDataProvider{
 		preparedStatement.close();
 		cursor.close();
 
-		return custList;
+		return list;
 	}
+
+	@Override
+	public boolean update(String query) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ArrayList<?> delete(String query) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean insert(Object o) throws SQLException {
+		Shop e = (Shop) o;
+		if (e == null) return false;
+		Statement statement = con.createStatement();
+		String query = "insert into shop values (shop_s.nextval, " 
+				+ "'" + e.getOwnerId() +"'" + ","
+				+ "'" + e.getShopName() + "'" + ")";
+		
+		if (statement.executeUpdate(query) == 1) return true;
+		else return false;
+	}
+
 }
