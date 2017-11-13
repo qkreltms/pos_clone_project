@@ -12,6 +12,11 @@ public class Menu {
 		this.menuPrice = menuPrice;
 		this.shopId = shopId;
 	}
+	public Menu(String menuName, int menuPrice,  int shopId) {
+		this.menuName = menuName;
+		this.menuPrice = menuPrice;
+		this.shopId = shopId;
+	}
 	public int getMenuId() {
 		return menuId;
 	}

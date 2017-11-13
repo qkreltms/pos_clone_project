@@ -16,11 +16,10 @@ public class Order {
 		this.orderPrice = orderPrice;
 		this.orderDate = orderDate;
 	}
-	public Order(int custId, int MenuId, int orderPrice, Date orderDate) {
+	public Order(int custId, int MenuId, int orderPrice) {
 		this.custId = custId;
 		this.MenuId = MenuId;
 		this.orderPrice = orderPrice;
-		this.orderDate = orderDate;
 	}
 	public int getOrderId() {
 		return orderId;

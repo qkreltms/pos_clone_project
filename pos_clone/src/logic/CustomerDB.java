@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import data.Customer;
 import data.DataProvider;
 
-public class CustomerDB extends DatabaseBuilder implements DataProvider{
+public class CustomerDB extends DatabaseAbstract implements DataProvider{
 	private Connection con;
 	public final static String dbName = "Customer";
 	private String columCustomerId = "customer_id";
@@ -20,7 +20,8 @@ public class CustomerDB extends DatabaseBuilder implements DataProvider{
 		con = DBConnection.connect();
 	}
 	
-	public ArrayList<Customer> findOwnerById (String id) throws SQLException{
+	@Override
+	public ArrayList<Customer> findRecordById (String id) throws SQLException{
 		return select("SELECT * FROM "+ dbName + " WHERE " + columCustomerId + " = " + id);
 	}
 
@@ -50,23 +51,10 @@ public class CustomerDB extends DatabaseBuilder implements DataProvider{
 			}
 		}
 
-		con.close(); 
 		preparedStatement.close();
 		cursor.close();
 
 		return list;
-	}
-
-	@Override
-	public ArrayList<?> delete(String query) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean update(String query) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -79,8 +67,23 @@ public class CustomerDB extends DatabaseBuilder implements DataProvider{
 				+ "'" + e.getCustPhoneNumber() +"'" + ","
 				+ "'" + e.getCustCardNumber() + "'" + ")";
 		
-		if (statement.executeUpdate(query) == 1) return true;
+		if (statement.executeUpdate(query) == 1) {
+			statement.close();
+			return true;
+		}
 		else return false;
+	}
+
+	@Override
+	public boolean update(Object o) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(Object o) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }	

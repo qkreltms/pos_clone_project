@@ -9,7 +9,10 @@ public class Shop {
 		this.shopId = shopId;
 		this.shopName = shopName;
 		this.ownerId = ownerId;
-
+	}
+	public Shop(int ownerId, String shopName) {
+		this.shopName = shopName;
+		this.ownerId = ownerId;
 	}
 	public int getOwnerId() {
 		return ownerId;

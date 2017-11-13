@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import data.DataProvider;
 import data.ShopOwner;
 
-public class ShopOwnerDB extends DatabaseBuilder implements DataProvider{
+public class ShopOwnerDB extends DatabaseAbstract implements DataProvider{
 	private Connection con;
 	public static String dbName = "Shop_owner";
 	private String columShopOwnerId = "shop_owner_id";
@@ -23,7 +23,8 @@ public class ShopOwnerDB extends DatabaseBuilder implements DataProvider{
 		con = DBConnection.connect();
 	}
 	
-	public ArrayList<ShopOwner> findOwnerById (String id) throws SQLException{
+	@Override
+	public ArrayList<ShopOwner> findRecordById (String id) throws SQLException{
 		return select("SELECT * FROM "+ dbName + " WHERE " + columShopOwnerId + " = " + id);
 	}
 	
@@ -51,23 +52,11 @@ public class ShopOwnerDB extends DatabaseBuilder implements DataProvider{
 				System.out.println(result);
 			}
 		}
-//		con.close(); 
+		
 		preparedStatement.close();
 		cursor.close();
 
 		return list;
-	}
-
-	@Override
-	public boolean update(String query) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public ArrayList<?> delete(String query) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -79,7 +68,22 @@ public class ShopOwnerDB extends DatabaseBuilder implements DataProvider{
 				+ "'" + e.getShopOwnerName() +"'" + ","
 				+ "'" + e.getShopOwnerPhoneNumber() + "'" + ")";
 		
-		if (statement.executeUpdate(query) == 1) return true;
+		if (statement.executeUpdate(query) == 1) {
+			statement.close();
+			return true;
+		}
 		else return false;
+	}
+
+	@Override
+	public boolean update(Object o) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(Object o) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import data.DataProvider;
 import data.Order;
 
-public class OrderDB extends DatabaseBuilder implements DataProvider{
+public class OrderDB extends DatabaseAbstract implements DataProvider{
 	private Connection con;
 	public final static String dbName = "orders";
 	private String columOrderId = "orders_id";
@@ -22,7 +22,8 @@ public class OrderDB extends DatabaseBuilder implements DataProvider{
 		con = DBConnection.connect();
 	}
 	
-	public ArrayList<Order> findOwnerById (String id) throws SQLException{
+	@Override
+	public ArrayList<Order> findRecordById (String id) throws SQLException{
 		return select("SELECT * FROM "+ dbName + " WHERE " + columOrderId + " = " + id);
 	}
 	
@@ -53,7 +54,6 @@ public class OrderDB extends DatabaseBuilder implements DataProvider{
 			}
 		}
 
-		con.close(); 
 		preparedStatement.close();
 		cursor.close();
 
@@ -62,17 +62,7 @@ public class OrderDB extends DatabaseBuilder implements DataProvider{
 
 
 
-	@Override
-	public ArrayList<?> delete(String query) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean update(String query) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 	
 	/*
 	 * 
@@ -87,10 +77,26 @@ public class OrderDB extends DatabaseBuilder implements DataProvider{
 				+ "'" + e.getCustId() +"'" + ","
 				+ "'" + e.getMenuId() +"'" + ","
 				+ "'" + e.getOrderPrice() +"'" + ","
-				+ "'" + e.getOrderDate() + "'" + ")";
+				+ "'" + new Date(System.currentTimeMillis()) + "'" + ")";
 		
-		if (statement.executeUpdate(query) == 1) return true;
+		
+		if (statement.executeUpdate(query) == 1) {
+			statement.close();
+			return true;
+		}
 		else return false;
+	}
+
+	@Override
+	public boolean update(Object o) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delete(Object o) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

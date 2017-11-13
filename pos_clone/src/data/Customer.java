@@ -12,6 +12,11 @@ public class Customer {
 		this.custPhoneNumber = custPhoneNumber;
 		this.custCardNumber = custCardNumber;
 	}
+	public Customer(String custName, String custPhoneNumber, String custCardNumber) {
+		this.custName = custName;
+		this.custPhoneNumber = custPhoneNumber;
+		this.custCardNumber = custCardNumber;
+	}
 	public int getCustId() {
 		return custId;
 	}
