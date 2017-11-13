@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="224.0" prefWidth="244.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1">
+   <children>
+      <BorderPane layoutX="-21.0" layoutY="-9.0" prefHeight="518.0" prefWidth="473.0" translateY="5.0">
+         <top>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox prefHeight="142.0" prefWidth="474.0">
+                     <children>
+                        <Label text="사업자정보" translateX="30.0" translateY="10.0">
+                           <font>
+                              <Font name="HYPost-Medium" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="가게이름 " translateX="30.0" translateY="13.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="사업자 전화번호" translateX="30.0" translateY="15.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="EDIYA COFFEE" translateX="170.0" translateY="-25.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="010-0000-0000" translateX="170.0" translateY="-22.0">
+                           <font>
+                              <Font name="HYPost-Medium" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="15.0" prefWidth="472.0" text="----------------------------------------------------------------" translateX="25.0" translateY="-20.0" />
+                        <Label prefWidth="474.0" text="*정부방침에 의해 교환/환불은 반드시 영수증을 지참하셔야 하며," translateX="30.0" translateY="-15.0">
+                           <font>
+                              <Font name="HYPost-Medium" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="카드결제는 30일 이내 카드와 영수증 지참 시 가능합니다." translateX="37.0" translateY="-15.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label text="----------------------------------------------------------------" translateX="25.0" translateY="-10.0" />
+                        <Label text="----------------------------------------------------------------" translateX="25.0" translateY="30.0" />
+                        <Label text="----------------------------------------------------------------" translateX="25.0" translateY="85.0" />
+                     </children>
+                  </VBox>
+                  <Label text="---------------------17/11/13     23:55:04 ------------------------" translateX="25.0" translateY="160.0" />
+               </children>
+            </VBox>
+         </top>
+         <left>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="아메리카노" translateX="30.0" translateY="-55.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="합계수량/금액" translateX="30.0" translateY="-55.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="과세 매출" translateX="30.0" translateY="-40.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="부가세" translateX="30.0" translateY="-40.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="합계" textOverrun="CENTER_ELLIPSIS" translateX="30.0" translateY="-40.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="카드번호" translateX="120.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="승인번호" translateX="120.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <VBox maxWidth="-Infinity" prefHeight="358.0" prefWidth="274.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="3" translateX="140.0" translateY="-54.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="3" translateX="140.0" translateY="-54.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="신용카드 전표(고객용) " translateX="70.0" translateY="35.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="0000-0000-0000-0000" translateX="120.0" translateY="39.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="99999999" translateX="120.0" translateY="39.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="데이터베이스는 오임걸교수님과 함께" translateX="-70.0" translateY="70.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="하고  10% 학점 보너스도 함께!" translateX="-70.0" translateY="70.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+         </center>
+         <right>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="8,400" translateX="50.0" translateY="-54.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="8,400" translateX="50.0" translateY="-54.0">
+                     <font>
+                        <Font name="HYPost-Medium" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="7,980" translateX="50.0" translateY="-39.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="420" translateX="64.0" translateY="-39.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="8,400" translateX="50.0" translateY="-39.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </right>
+         <bottom>
+            <ImageView fitHeight="76.0" fitWidth="437.0" pickOnBounds="true" preserveRatio="true" translateX="10.0" translateY="-20.0" BorderPane.alignment="CENTER" />
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>
