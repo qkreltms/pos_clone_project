@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import data.DataProvider;
 import data.Menu;
 
+
 public class MenuDB extends DatabaseAbstract implements DataProvider {
 	private Connection con;
 	public final static String dbName = "menu";
@@ -19,68 +20,83 @@ public class MenuDB extends DatabaseAbstract implements DataProvider {
 	public MenuDB() {
 		con = DBConnection.connect();
 	}
-	
+
 	@Override
-	public ArrayList<Menu> findRecordById (String id) throws SQLException{
+	public ArrayList<Menu> findRecordById (String id) {
 		return select("SELECT * FROM "+ dbName + " WHERE " + columMenuId + " = " + id);
 	}
 	@Override
-	public ArrayList<Menu> getAllData() throws SQLException {
+	public ArrayList<Menu> getAllData() {
 		return select("SELECT * FROM "+dbName); 
 	}
-	
+
 	@Override
-	public ArrayList<Menu> select(String query) throws SQLException {
-		PreparedStatement preparedStatement = con.prepareStatement(query);
-		ResultSet cursor = preparedStatement.executeQuery();
-		list = new ArrayList<>();
+	public ArrayList<Menu> select(String query) {
+		try {
+			PreparedStatement preparedStatement = con.prepareStatement(query);
+			ResultSet cursor = preparedStatement.executeQuery();
+			list = new ArrayList<>();
 
-		System.out.println("=============" + dbName + "=============");
-		System.out.println("menuId\tshopId\tmenuName\tmenuPrice");
-		while(cursor.next()) {
-			int menuId = cursor.getInt(1);
-			int shopId = cursor.getInt(2);
-			String menuName = cursor.getString(3);
-			int menuPrice = cursor.getInt(4);
+			System.out.println("=============" + dbName + "=============");
+			System.out.println("menuId\tshopId\tmenuName\tmenuPrice");
+			while(cursor.next()) {
+				int menuId = cursor.getInt(1);
+				int shopId = cursor.getInt(2);
+				String menuName = cursor.getString(3);
+				int menuPrice = cursor.getInt(4);
 
-			if (!cursor.wasNull()) {
-				list.add(new Menu(menuId, menuName, menuPrice, shopId));
-				String result = menuId + "\t" + shopId + "\t" + menuName + "\t" + menuPrice;
-				System.out.println(result);
+				if (!cursor.wasNull()) {
+					list.add(new Menu(menuId, menuName, menuPrice, shopId));
+					String result = menuId + "\t" + shopId + "\t" + menuName + "\t" + menuPrice;
+					System.out.println(result);
+				}
 			}
+
+			preparedStatement.close();
+			cursor.close();
+
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
-		preparedStatement.close();
-		cursor.close();
-
-		return list;
+		
+		return null;
 	}
 
 	@Override
-	public boolean insert(Object o) throws SQLException {
-		Menu e = (Menu) o;
-		if (e == null) return false;
-		Statement statement = con.createStatement();
-		String query = "insert into menu values (menu_s.nextval, " 
-				+ "'" + e.getShopId() +"'" + ","
-				+ "'" + e.getMenuName() +"'" + ","
-				+ "'" + e.getMenuPrice() + "'" + ")";
-	
-		if (statement.executeUpdate(query) == 1) {
-			statement.close();
-			return true;
+	public boolean insert(Object o) {
+		try {
+			Menu e = (Menu) o;
+			if (e == null) return false;
+			Statement statement;
+
+			statement = con.createStatement();
+
+			String query = "insert into menu values (menu_s.nextval, " 
+					+ "'" + e.getShopId() +"'" + ","
+					+ "'" + e.getMenuName() +"'" + ","
+					+ "'" + e.getMenuPrice() + "'" + ")";
+
+			final int SUCCESSFULLY_INSERTED = 1;
+			if (statement.executeUpdate(query) == SUCCESSFULLY_INSERTED) {
+				statement.close();
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		else return false;
+		return false;
+
 	}
 
 	@Override
-	public boolean update(Object o) throws SQLException {
+	public boolean update(Object o) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(Object o) throws SQLException {
+	public boolean delete(Object o) {
 		// TODO Auto-generated method stub
 		return false;
 	}

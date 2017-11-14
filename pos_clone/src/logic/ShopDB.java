@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import data.DataProvider;
 import data.Shop;
 
-public class ShopDB extends DatabaseAbstract implements DataProvider{
+public class ShopDB extends DatabaseAbstract implements DataProvider {
 	private Connection con;
 	public final static String dbName = "Shop";
 	private String columShopId = "shop_id";
@@ -21,69 +21,80 @@ public class ShopDB extends DatabaseAbstract implements DataProvider{
 	public ShopDB() {
 		con = DBConnection.connect();
 	}
-	
+
 	@Override
-	public ArrayList<Shop> findRecordById (String id) throws SQLException{
+	public ArrayList<Shop> findRecordById (String id) {
 		return select("SELECT * FROM "+ dbName + " WHERE " + columShopId + " = " + id);
 	}
-	
+
 	@Override
-	public ArrayList<Shop> getAllData() throws SQLException {
+	public ArrayList<Shop> getAllData() {
 		return select("SELECT * FROM " + dbName); 
 	}
-	
+
 	@Override
-	public ArrayList<Shop> select(String query) throws SQLException {
-		PreparedStatement preparedStatement = con.prepareStatement(query);
-		ResultSet cursor = preparedStatement.executeQuery();
-		list = new ArrayList<>();
+	public ArrayList<Shop> select(String query) {
+		try {
+			PreparedStatement preparedStatement = con.prepareStatement(query);
+			ResultSet cursor = preparedStatement.executeQuery();
+			list = new ArrayList<>();
 
-		System.out.println("=============" + dbName + "=============");
-		System.out.println("shopId\townerId\tshopName");
-		while(cursor.next()) {
-			int shopId = cursor.getInt(1);
-			int ownerId = cursor.getInt(2);
-			String shopName = cursor.getString(3);
+			System.out.println("=============" + dbName + "=============");
+			System.out.println("shopId\townerId\tshopName");
+			while(cursor.next()) {
+				int shopId = cursor.getInt(1);
+				int ownerId = cursor.getInt(2);
+				String shopName = cursor.getString(3);
 
-			if (!cursor.wasNull()) {
-				list.add(new Shop(shopId, ownerId, shopName));
-				String result = shopId + "\t" + ownerId + "\t" + shopName;
-				System.out.println(result);	
+				if (!cursor.wasNull()) {
+					list.add(new Shop(shopId, ownerId, shopName));
+					String result = shopId + "\t" + ownerId + "\t" + shopName;
+					System.out.println(result);	
+				}
 			}
+
+			preparedStatement.close();
+			cursor.close();
+
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
-		preparedStatement.close();
-		cursor.close();
-
-		return list;
+		return null;
 	}
 
 
 
 	@Override
-	public boolean insert(Object o) throws SQLException {
-		Shop e = (Shop) o;
-		if (e == null) return false;
-		Statement statement = con.createStatement();
-		String query = "insert into shop values (shop_s.nextval, " 
-				+ "'" + e.getOwnerId() +"'" + ","
-				+ "'" + e.getShopName() + "'" + ")";
-		
-		if (statement.executeUpdate(query) == 1) {
-			statement.close();
-			return true;
+	public boolean insert(Object o) {
+		try {
+			Shop e = (Shop) o;
+			if (e == null) return false;
+			Statement statement = con.createStatement();
+			String query = "insert into shop values (shop_s.nextval, " 
+					+ "'" + e.getOwnerId() +"'" + ","
+					+ "'" + e.getShopName() + "'" + ")";
+
+			final int SUCCESSFULLY_INSERTED = 1;
+			if (statement.executeUpdate(query) == SUCCESSFULLY_INSERTED) {
+				statement.close();
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		else return false;
+		return false;
 	}
 
 	@Override
-	public boolean update(Object o) throws SQLException {
+	public boolean update(Object o) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(Object o) throws SQLException {
+	public boolean delete(Object o) {
 		// TODO Auto-generated method stub
 		return false;
 	}

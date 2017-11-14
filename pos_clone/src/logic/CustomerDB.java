@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import data.Customer;
 import data.DataProvider;
 
-public class CustomerDB extends DatabaseAbstract implements DataProvider{
+public class CustomerDB extends DatabaseAbstract implements DataProvider {
 	private Connection con;
 	public final static String dbName = "Customer";
 	private String columCustomerId = "customer_id";
@@ -19,69 +19,81 @@ public class CustomerDB extends DatabaseAbstract implements DataProvider{
 	public CustomerDB() {
 		con = DBConnection.connect();
 	}
-	
+
 	@Override
-	public ArrayList<Customer> findRecordById (String id) throws SQLException{
+	public ArrayList<Customer> findRecordById (String id) {
 		return select("SELECT * FROM "+ dbName + " WHERE " + columCustomerId + " = " + id);
 	}
 
 	@Override
-	public ArrayList<Customer> getAllData() throws SQLException {
+	public ArrayList<Customer> getAllData() {
 		return select("SELECT * FROM "+dbName); 
 	}
 
 	@Override
-	public ArrayList<Customer> select(String query) throws SQLException {
-		PreparedStatement preparedStatement = con.prepareStatement(query);
-		ResultSet cursor = preparedStatement.executeQuery();
-		list = new ArrayList<>();
+	public ArrayList<Customer> select(String query) {
+		try {
+			PreparedStatement preparedStatement = con.prepareStatement(query);
+			ResultSet cursor = preparedStatement.executeQuery();
+			list = new ArrayList<>();
 
-		System.out.println("=============" + dbName + "=============");
-		System.out.println("id\tname\tphone_num\tcard_num");
-		while(cursor.next()) {
-			int id = cursor.getInt(1);
-			String name = cursor.getString(2);
-			String phoneNum = cursor.getString(3);
-			String cardNum = cursor.getString(4);
+			System.out.println("=============" + dbName + "=============");
+			System.out.println("id\tname\tphone_num\tcard_num");
+			while(cursor.next()) {
+				int id = cursor.getInt(1);
+				String name = cursor.getString(2);
+				String phoneNum = cursor.getString(3);
+				String cardNum = cursor.getString(4);
 
-			if (!cursor.wasNull()) {
-				list.add(new Customer(id, name, phoneNum, cardNum));
-				String result = id + "\t" + name + "\t" + phoneNum + "\t" + cardNum;
-				System.out.println(result);
+				if (!cursor.wasNull()) {
+					list.add(new Customer(id, name, phoneNum, cardNum));
+					String result = id + "\t" + name + "\t" + phoneNum + "\t" + cardNum;
+					System.out.println(result);
+				}
 			}
+
+			preparedStatement.close();
+			cursor.close();
+
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
-		preparedStatement.close();
-		cursor.close();
-
-		return list;
+		return null;
 	}
 
 	@Override
-	public boolean insert(Object o) throws SQLException {
-		Customer e = (Customer) o;
-		if (e == null) return false;
-		Statement statement = con.createStatement();
-		String query = "insert into customer values (customer_s.nextval, " 
-				+ "'" + e.getCustName() +"'" + ","
-				+ "'" + e.getCustPhoneNumber() +"'" + ","
-				+ "'" + e.getCustCardNumber() + "'" + ")";
-		
-		if (statement.executeUpdate(query) == 1) {
-			statement.close();
-			return true;
+	public boolean insert(Object o) {
+		try {
+			Customer e = (Customer) o;
+			if (e == null) return false;
+			Statement statement = con.createStatement();
+			String query = "insert into customer values (customer_s.nextval, " 
+					+ "'" + e.getCustName() +"'" + ","
+					+ "'" + e.getCustPhoneNumber() +"'" + ","
+					+ "'" + e.getCustCardNumber() + "'" + ")";
+
+			final int SUCCESSFULLY_INSERTED = 1;
+			if (statement.executeUpdate(query) == SUCCESSFULLY_INSERTED) {
+				statement.close();
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		else return false;
+
+		return false;
 	}
 
 	@Override
-	public boolean update(Object o) throws SQLException {
+	public boolean update(Object o) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(Object o) throws SQLException {
+	public boolean delete(Object o) {
 		// TODO Auto-generated method stub
 		return false;
 	}

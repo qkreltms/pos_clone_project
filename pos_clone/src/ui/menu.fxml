@@ -1,101 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <BorderPane layoutX="-21.0" layoutY="-9.0" prefHeight="518.0" prefWidth="473.0" translateY="5.0">
-         <top>
-            <Label prefHeight="67.0" prefWidth="390.0" text="       EDIYA COFFEE" textAlignment="CENTER" textFill="#0939bd" translateY="50.0" BorderPane.alignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="36.0" />
-               </font>
-            </Label>
-         </top>
-         <center>
-            <HBox prefHeight="382.0" prefWidth="349.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="23.0" prefWidth="82.0" text="아메리카노 " translateX="20.0" translateY="90.0" />
-                  <Button mnemonicParsing="false" text="카페라떼" translateX="40.0" translateY="90.0" />
-                  <Button mnemonicParsing="false" prefHeight="23.0" prefWidth="110.0" text="카라멜 마끼야또 " translateX="60.0" translateY="90.0" />
-               </children>
-            </HBox>
-         </center>
-         <right>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label text="주문 내역" textFill="#0939bd" translateX="-180.0" translateY="160.0">
-                     <font>
-                        <Font name="HYPost-Medium" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label text="3" translateX="-85.0" translateY="185.0">
-                     <font>
-                        <Font name="HYPost-Medium" size="15.0" />
-                     </font>
-                  </Label>
-                  <Button mnemonicParsing="false" text="-" translateX="-50.0" translateY="160.0">
-                     <font>
-                        <Font name="HYPost-Medium" size="15.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-         </right>
-         <left>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label text="아메리카노" translateX="120.0" translateY="210.0">
-                     <font>
-                        <Font name="HYPost-Medium" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label text="메뉴" textFill="#0939bd" translateX="50.0" translateY="70.0">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <Button mnemonicParsing="false" text="+" translateX="230.0" translateY="160.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-         </left>
-         <bottom>
-            <FlowPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label text="금액" translateX="120.0" translateY="25.0">
-                     <font>
-                        <Font name="HYPost-Medium" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label text="8,400원" translateX="265.0" translateY="25.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <Button mnemonicParsing="false" text="뒤로 가기" translateX="85.0" translateY="85.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-                  <Button mnemonicParsing="false" text="결제" translateX="130.0" translateY="85.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Button>
-               </children>
-            </FlowPane>
-         </bottom>
-      </BorderPane>
-   </children>
-</AnchorPane>
+<BorderPane fx:id="rootLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controller">
+   <bottom>
+      <Label fx:id="selectedMenu" alignment="CENTER" text="Label" textAlignment="CENTER" BorderPane.alignment="TOP_CENTER">
+         <font>
+            <Font size="32.0" />
+         </font></Label>
+   </bottom>
+</BorderPane>
