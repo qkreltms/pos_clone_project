@@ -8,12 +8,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import data.DataProvider;
+import data.Shop;
 import data.ShopOwner;
 
 public class ShopOwnerDB extends DatabaseAbstract implements DataProvider {
 	private Connection con;
 	public static String dbName = "Shop_owner";
-	private String columShopOwnerId = "shop_owner_id";
+	public static String columShopOwnerId = "shop_owner_id";
 	private String columShopOwnerName = "shop_owner_name";
 	private String columShopOwnerPhoneNum = "shop_owner_phone_num";
 
@@ -24,9 +25,10 @@ public class ShopOwnerDB extends DatabaseAbstract implements DataProvider {
 	}
 
 	@Override
-	public ArrayList<ShopOwner> findRecordById (String id) {
-		return select("SELECT * FROM "+ dbName + " WHERE " + columShopOwnerId + " = " + id);
+	public ArrayList<ShopOwner> findRecordById (String columName, int id) {
+		return select("SELECT * FROM "+ dbName + " WHERE " + columName + " = " + id);
 	}
+
 
 	@Override
 	public ArrayList<ShopOwner> getAllData() {

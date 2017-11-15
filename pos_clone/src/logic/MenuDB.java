@@ -14,7 +14,7 @@ import data.Menu;
 public class MenuDB extends DatabaseAbstract implements DataProvider {
 	private Connection con;
 	public final static String dbName = "menu";
-	private String columMenuId = "menu_id";
+	public static String columMenuId = "menu_id";
 	private ArrayList<Menu> list;
 
 	public MenuDB() {
@@ -22,8 +22,8 @@ public class MenuDB extends DatabaseAbstract implements DataProvider {
 	}
 
 	@Override
-	public ArrayList<Menu> findRecordById (String id) {
-		return select("SELECT * FROM "+ dbName + " WHERE " + columMenuId + " = " + id);
+	public ArrayList<Menu> findRecordById (String columName, int id) {
+		return select("SELECT * FROM "+ dbName + " WHERE " + columName + " = " + id);
 	}
 	@Override
 	public ArrayList<Menu> getAllData() {
@@ -38,7 +38,7 @@ public class MenuDB extends DatabaseAbstract implements DataProvider {
 			list = new ArrayList<>();
 
 			System.out.println("=============" + dbName + "=============");
-			System.out.println("menuId\tshopId\tmenuName\tmenuPrice");
+			System.out.println("menuId\tshopId\tmenuName\t\tmenuPrice");
 			while(cursor.next()) {
 				int menuId = cursor.getInt(1);
 				int shopId = cursor.getInt(2);

@@ -23,25 +23,15 @@ public class StartPos extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		test();
-		
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("Menu");
+		this.primaryStage.setTitle("Java & Oracle Team Project : POS");
 		
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(StartPos.class.getResource("menu.fxml"));
 		rootLayout = (BorderPane) loader.load();
 		Scene scene = new Scene(rootLayout);
 		
-	
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
-	public void test() {
-//		DataProvider d = new MenuDB();
-//		d.insert(new Menu("¶ó¶¼", 2000, 1));
-	}
-	
-	
 }

@@ -9,12 +9,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import data.DataProvider;
+import data.Menu;
 import data.Order;
 
 public class OrderDB extends DatabaseAbstract implements DataProvider {
 	private Connection con;
 	public final static String dbName = "orders";
-	private String columOrderId = "orders_id";
+	public static String columOrderId = "orders_id";
 	private ArrayList<Order> list;
 
 	public OrderDB() {
@@ -22,8 +23,8 @@ public class OrderDB extends DatabaseAbstract implements DataProvider {
 	}
 
 	@Override
-	public ArrayList<Order> findRecordById (String id) {
-		return select("SELECT * FROM "+ dbName + " WHERE " + columOrderId + " = " + id);
+	public ArrayList<Order> findRecordById (String columName, int id) {
+		return select("SELECT * FROM "+ dbName + " WHERE " + columName + " = " + id);
 	}
 
 	@Override

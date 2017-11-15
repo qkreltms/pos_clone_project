@@ -13,8 +13,8 @@ import data.Shop;
 public class ShopDB extends DatabaseAbstract implements DataProvider {
 	private Connection con;
 	public final static String dbName = "Shop";
-	private String columShopId = "shop_id";
-	private String columShopOwnerId = "shop_owner_id";
+	public static String columShopId = "shop_id";
+	public static String columShopOwnerId = "shop_owner_id";
 	private String columShopName = "shop_name";	
 	private ArrayList<Shop> list;
 
@@ -23,8 +23,8 @@ public class ShopDB extends DatabaseAbstract implements DataProvider {
 	}
 
 	@Override
-	public ArrayList<Shop> findRecordById (String id) {
-		return select("SELECT * FROM "+ dbName + " WHERE " + columShopId + " = " + id);
+	public ArrayList<Shop> findRecordById (String columName, int id) {
+		return select("SELECT * FROM "+ dbName + " WHERE " + columName + " = " + id);
 	}
 
 	@Override

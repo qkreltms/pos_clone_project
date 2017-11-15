@@ -9,11 +9,12 @@ import java.util.ArrayList;
 
 import data.Customer;
 import data.DataProvider;
+import data.Shop;
 
 public class CustomerDB extends DatabaseAbstract implements DataProvider {
 	private Connection con;
 	public final static String dbName = "Customer";
-	private String columCustomerId = "customer_id";
+	public static String columCustomerId = "customer_id";
 	private ArrayList<Customer> list;
 
 	public CustomerDB() {
@@ -21,9 +22,10 @@ public class CustomerDB extends DatabaseAbstract implements DataProvider {
 	}
 
 	@Override
-	public ArrayList<Customer> findRecordById (String id) {
-		return select("SELECT * FROM "+ dbName + " WHERE " + columCustomerId + " = " + id);
+	public ArrayList<Customer> findRecordById (String columName, int id) {
+		return select("SELECT * FROM "+ dbName + " WHERE " + columName + " = " + id);
 	}
+
 
 	@Override
 	public ArrayList<Customer> getAllData() {
