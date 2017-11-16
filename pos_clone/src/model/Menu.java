@@ -1,6 +1,9 @@
-package data;
+package model;
 
-public class Menu {
+import java.io.Serializable;
+
+public class Menu implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private int menuId;
 	private String menuName;
 	private int menuPrice;

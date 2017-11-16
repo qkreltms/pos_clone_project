@@ -7,9 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import data.Customer;
-import data.DataProvider;
-import data.Shop;
+import model.Customer;
+import model.DataProvider;
+import model.Order;
+import model.Shop;
 
 public class CustomerDB extends DatabaseAbstract implements DataProvider {
 	private Connection con;
@@ -100,4 +101,26 @@ public class CustomerDB extends DatabaseAbstract implements DataProvider {
 		return false;
 	}
 
+	
+	public long getMaxId() {
+		try {
+			String query = "select max(customer_id) from customer";
+			PreparedStatement preparedStatement = con.prepareStatement(query);
+			ResultSet cursor = preparedStatement.executeQuery();
+			long maxId = 0;
+			
+			while(cursor.next()) {
+				maxId = cursor.getInt(1);
+			}
+
+			preparedStatement.close();
+			cursor.close();
+			
+			return maxId;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 }	

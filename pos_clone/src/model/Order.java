@@ -1,37 +1,31 @@
-package data;
+package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Order {
 	private int orderId;
 	private int custId;
-	private int MenuId;
-	private int orderPrice;
 	private Date orderDate;
+	private ArrayList<Menu> menuList;
 	
-	public Order(int orderId, int custId, int MenuId, int orderPrice, Date orderDate) {
+	public Order(int orderId, int custId, Date orderDate, ArrayList<Menu> menuList) {
 		this.orderId = orderId;
 		this.custId = custId;
-		this.MenuId = MenuId;
-		this.orderPrice = orderPrice;
 		this.orderDate = orderDate;
+		this.menuList = menuList;
 	}
-	public Order(int custId, int MenuId, int orderPrice) {
+	//시간이 자동 생성될때 아래것 사용
+	public Order(int orderId, int custId, ArrayList<Menu> menuList) {
+		this.orderId = orderId;
 		this.custId = custId;
-		this.MenuId = MenuId;
-		this.orderPrice = orderPrice;
+		this.menuList = menuList;
 	}
 	public int getOrderId() {
 		return orderId;
 	}
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
-	}
-	public int getOrderPrice() {
-		return orderPrice;
-	}
-	public void setOrderPrice(int orderPrice) {
-		this.orderPrice = orderPrice;
 	}
 	public Date getOrderDate() {
 		return orderDate;
@@ -45,10 +39,10 @@ public class Order {
 	public void setCustId(int custId) {
 		this.custId = custId;
 	}
-	public int getMenuId() {
-		return MenuId;
+	public ArrayList<Menu> getMenuList() {
+		return menuList;
 	}
-	public void setMenuId(int menuId) {
-		MenuId = menuId;
+	public void setMenuList(ArrayList<Menu> menuList) {
+		this.menuList = menuList;
 	}
 }

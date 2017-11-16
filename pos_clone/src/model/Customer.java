@@ -1,4 +1,4 @@
-package data;
+package model;
 
 public class Customer {
 	private int custId;
@@ -8,11 +8,6 @@ public class Customer {
 	
 	public Customer(int custId, String custName, String custPhoneNumber, String custCardNumber) {
 		this.custId = custId;
-		this.custName = custName;
-		this.custPhoneNumber = custPhoneNumber;
-		this.custCardNumber = custCardNumber;
-	}
-	public Customer(String custName, String custPhoneNumber, String custCardNumber) {
 		this.custName = custName;
 		this.custPhoneNumber = custPhoneNumber;
 		this.custCardNumber = custCardNumber;

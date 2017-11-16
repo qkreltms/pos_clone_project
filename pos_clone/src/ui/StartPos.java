@@ -1,7 +1,5 @@
 package ui;
 
-import data.DataProvider;
-import data.Menu;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +10,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import logic.MenuDB;
+import model.DataProvider;
+import model.Menu;
 
 public class StartPos extends Application {
 	private Stage primaryStage; //¶ç¿ï fxmlÆÄÀÏ

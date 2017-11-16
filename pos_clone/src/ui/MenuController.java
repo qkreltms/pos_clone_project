@@ -3,11 +3,9 @@ package ui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
-import data.DataProvider;
-import data.Menu;
-import data.Shop;
 import javafx.beans.value.ChangeListener;
 
 import javafx.beans.value.ObservableValue;
@@ -33,16 +31,22 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import logic.MenuDB;
+import logic.OrderDB;
 import logic.ShopDB;
+import model.DataProvider;
+import model.Menu;
+import model.Order;
+import model.Shop;
 
 //TODO : 로그인 화면 만들어서 디비 아이디, 페스워드 받기
 //TODO : exe파일 만들기 https://www.youtube.com/watch?v=CQEPlGFYTr8
-//TODO : Orders db에 값넣기
+
 public class MenuController implements Initializable {
 	private ListView<Menu> list = new ListView<>();
 	private @FXML Label selectedMenu;
 	private @FXML BorderPane rootLayout;
 	private @FXML ChoiceBox<Shop> choiceBox;
+	private ArrayList<Menu> menuList = new ArrayList<>();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -53,7 +57,7 @@ public class MenuController implements Initializable {
 	@SuppressWarnings("unchecked")
 	private void setChoiceBoxAndInitList(DataProvider shop) {
 		ArrayList<Shop> shopList = (ArrayList<Shop>) new ArrayList<>(shop.getAllData());
-		
+
 		for (Shop i : shopList) {
 			choiceBox.getItems().addAll(i);
 		}
@@ -69,11 +73,7 @@ public class MenuController implements Initializable {
 				return null;
 			}
 		});
-		
-		if (! shopList.isEmpty()) {
-			choiceBox.getSelectionModel().select(0);
-		}
-		
+
 		choiceBox
 		.getSelectionModel()
 		.selectedIndexProperty()
@@ -86,7 +86,6 @@ public class MenuController implements Initializable {
 		});
 	}
 
-	ArrayList<Menu> menuList = new ArrayList<>();
 	private void setAndGetBottomLabel(Menu menu, boolean ctn) {
 		if (ctn) {
 			menuList.add(menu);
@@ -98,11 +97,11 @@ public class MenuController implements Initializable {
 			}
 		}
 	}
-	
+
 	private void setSumAndTextBottom() {
 		String textBottom = "";
 		int sum = 0;
-		
+
 		for (Menu s : menuList) {
 			if (s != null) {
 				textBottom = textBottom + s.getMenuName() + s.getMenuPrice() + "\n";
@@ -110,8 +109,6 @@ public class MenuController implements Initializable {
 			}
 		}
 		selectedMenu.setText(textBottom + "\n" + "총 합 = " + sum);
-		sum = 0;
-		textBottom = "";
 	}
 
 	private ListView<Menu> setAndGetList(Shop selectedItem) {
@@ -131,7 +128,7 @@ public class MenuController implements Initializable {
 
 			return list;
 		}
-		
+
 		return null;
 	}
 
@@ -179,21 +176,21 @@ public class MenuController implements Initializable {
 	}
 
 	@FXML private void nextScene(ActionEvent event) throws IOException {
-		Parent nextPage = FXMLLoader.load(this.getClass().getResource("payment.fxml"));
-		Scene nextPageScene = new Scene(nextPage);
-		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		thisStage.setScene(nextPageScene);
-		thisStage.show();
-		
-		System.out.println(menuList.isEmpty()); //TODO : 비어있을때알럿박스 생성 및 다음으로 못 넘어가도록.
+		if (! menuList.isEmpty()) {
+			FXMLLoader nextPage = new FXMLLoader(this.getClass().getResource("payment.fxml"));
+			Parent root = (Parent) nextPage.load();
+			
+			PaymentController paymentController = nextPage.getController();
+			paymentController.setMenuList(menuList);
+			
+			Scene nextPageScene = new Scene(root);
+			Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			thisStage.setScene(nextPageScene);
+			thisStage.show();
+		}
 	}
-	
-//	private Label setAndGetLabel(String title, int fontSize) {
-//		Label label = new Label(title);
-//		label.setMaxWidth(Double.MAX_VALUE);
-//		label.setAlignment(Pos.CENTER);
-//		label.setFont(Font.font("system", FontWeight.BOLD, fontSize));
-//
-//		return label;
-//	}
+
+	public ArrayList<Menu> getMenuList() {
+		return menuList;
+	}
 }

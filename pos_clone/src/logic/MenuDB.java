@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import data.DataProvider;
-import data.Menu;
+import model.DataProvider;
+import model.Menu;
 
 
 public class MenuDB extends DatabaseAbstract implements DataProvider {
@@ -58,7 +58,7 @@ public class MenuDB extends DatabaseAbstract implements DataProvider {
 			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} 
 		
 		return null;
 	}
@@ -99,6 +99,12 @@ public class MenuDB extends DatabaseAbstract implements DataProvider {
 	public boolean delete(Object o) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public long getMaxId() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

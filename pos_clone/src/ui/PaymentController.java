@@ -2,10 +2,9 @@ package ui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import data.Customer;
-import data.DataProvider;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +16,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import logic.CustomerDB;
+import logic.OrderDB;
+import model.Customer;
+import model.DataProvider;
+import model.Menu;
+import model.Order;
 import javafx.event.ActionEvent;
 
 public class PaymentController implements Initializable{
@@ -26,6 +30,7 @@ public class PaymentController implements Initializable{
 	private String name;
 	private String phone;
 	private String card;
+	private ArrayList<Menu> menuList;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -39,12 +44,14 @@ public class PaymentController implements Initializable{
 				name = tfName.getText();	
 			}
 		});
+		
 		tfPhone.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
 				phone = tfPhone.getText();	
 			}
 		});
+		
 		tfCard.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
@@ -52,18 +59,35 @@ public class PaymentController implements Initializable{
 			}
 		});
 	}
-	
-	private void insertIntoCustomerDb() {
-		DataProvider dataProvider = new CustomerDB();
-		if (name != null && phone != null && card != null) { //TODO : 하나라도 널일경우 알럿박스 만들기
-			dataProvider.insert(new Customer(name, phone, card));
-		}
-		dataProvider.getAllData();
-	}
 
-	@FXML private void nextScene(ActionEvent event) {
-		System.out.println(name+phone+card);
-		insertIntoCustomerDb();
+	@FXML private void nextScene(ActionEvent event) throws IOException {
+		insertIntoCustomerDB();
+		insertIntoOrderDB();
+		
+		Parent nextPage = FXMLLoader.load(this.getClass().getResource("receipt.fxml"));
+		Scene nextPageScene = new Scene(nextPage);
+		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		thisStage.setScene(nextPageScene);
+		thisStage.show();
+	}
+	
+	private void insertIntoCustomerDB() {
+		CustomerDB custDB = new CustomerDB();
+		if (name != null && phone != null && card != null) { //TODO : 하나라도 널일경우 알럿박스 만들기
+			int custId = (int) custDB.getMaxId();
+			custDB.insert(new Customer(custId, name, phone, card));
+		}
+		custDB.getAllData();
+	}
+	
+	private void insertIntoOrderDB() {
+		DataProvider dataProvider = new OrderDB();
+		int orderId = (int)dataProvider.getMaxId();
+		
+		CustomerDB custDB = new CustomerDB();//TODO : 비효율적, 방법찾기
+		int custId = (int) custDB.getMaxId();
+		dataProvider.insert(new Order(orderId, custId, menuList));
+		dataProvider.getAllData(); 
 	}
 
 	@FXML private void prevScene(ActionEvent event) throws IOException {
@@ -72,5 +96,10 @@ public class PaymentController implements Initializable{
 		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		thisStage.setScene(nextPageScene);
 		thisStage.show();
+	}
+	
+	//getArrayList from prev scene
+	public void setMenuList(ArrayList<Menu> menuList) {
+		this.menuList = menuList;
 	}
 }

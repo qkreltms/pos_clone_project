@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import data.DataProvider;
-import data.Shop;
-import data.ShopOwner;
+import model.DataProvider;
+import model.Shop;
+import model.ShopOwner;
 
 public class ShopOwnerDB extends DatabaseAbstract implements DataProvider {
 	private Connection con;
@@ -98,5 +98,11 @@ public class ShopOwnerDB extends DatabaseAbstract implements DataProvider {
 	public boolean delete(Object o) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public long getMaxId() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -1,4 +1,4 @@
-package data;
+package model;
 
 public class ShopOwner {
 	private int shopOwnerId;
