@@ -23,7 +23,7 @@ public class CustomerDB extends DatabaseAbstract implements DataProvider {
 	}
 
 	@Override
-	public ArrayList<Customer> findRecordById (String columName, int id) {
+	public ArrayList<Customer> findRecordBy (String columName, int id) {
 		return select("SELECT * FROM "+ dbName + " WHERE " + columName + " = " + id);
 	}
 
@@ -116,6 +116,7 @@ public class CustomerDB extends DatabaseAbstract implements DataProvider {
 			preparedStatement.close();
 			cursor.close();
 			
+			if (maxId == 0) return 1;
 			return maxId;
 		} catch (SQLException e) {
 			e.printStackTrace();

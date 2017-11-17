@@ -31,7 +31,8 @@ public class PaymentController implements Initializable{
 	private String phone;
 	private String card;
 	private ArrayList<Menu> menuList;
-	
+	public static Customer cust;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		getTextFromtextField();
@@ -44,14 +45,14 @@ public class PaymentController implements Initializable{
 				name = tfName.getText();	
 			}
 		});
-		
+
 		tfPhone.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
 				phone = tfPhone.getText();	
 			}
 		});
-		
+
 		tfCard.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent event) {
@@ -63,31 +64,40 @@ public class PaymentController implements Initializable{
 	@FXML private void nextScene(ActionEvent event) throws IOException {
 		insertIntoCustomerDB();
 		insertIntoOrderDB();
+
+		FXMLLoader nextPage = new FXMLLoader(this.getClass().getResource("receipt.fxml"));
+		Parent root = (Parent) nextPage.load();
 		
-		Parent nextPage = FXMLLoader.load(this.getClass().getResource("receipt.fxml"));
-		Scene nextPageScene = new Scene(nextPage);
+//		nextPage.setController(ReceiptController.class);
+//		ReceiptController controller = nextPage.getController(); //왜 안돼지?? TODO: static 안쓰기 
+//		controller.setCust(cust);
+
+		
+		Scene nextPageScene = new Scene(root);
 		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		thisStage.setScene(nextPageScene);
 		thisStage.show();
 	}
-	
+
 	private void insertIntoCustomerDB() {
-		CustomerDB custDB = new CustomerDB();
-		if (name != null && phone != null && card != null) { //TODO : 하나라도 널일경우 알럿박스 만들기
-			int custId = (int) custDB.getMaxId();
-			custDB.insert(new Customer(custId, name, phone, card));
-		}
-		custDB.getAllData();
-	}
+		if (name != null && phone != null && card != null) { 
+			CustomerDB custDB = new CustomerDB();
+			cust = new Customer(name, phone, card);
 	
+			custDB.insert(cust);
+			custDB.getAllData();
+		}
+	}
+
 	private void insertIntoOrderDB() {
 		DataProvider dataProvider = new OrderDB();
 		int orderId = (int)dataProvider.getMaxId();
 		
-		CustomerDB custDB = new CustomerDB();//TODO : 비효율적, 방법찾기
+		CustomerDB custDB = new CustomerDB();
 		int custId = (int) custDB.getMaxId();
+		
 		dataProvider.insert(new Order(orderId, custId, menuList));
-		dataProvider.getAllData(); 
+		dataProvider.getAllData();
 	}
 
 	@FXML private void prevScene(ActionEvent event) throws IOException {
@@ -97,9 +107,13 @@ public class PaymentController implements Initializable{
 		thisStage.setScene(nextPageScene);
 		thisStage.show();
 	}
-	
+
 	//getArrayList from prev scene
 	public void setMenuList(ArrayList<Menu> menuList) {
 		this.menuList = menuList;
+	}
+	
+	public Customer getCust() {
+		return cust;
 	}
 }

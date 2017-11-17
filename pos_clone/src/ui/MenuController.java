@@ -46,7 +46,8 @@ public class MenuController implements Initializable {
 	private @FXML Label selectedMenu;
 	private @FXML BorderPane rootLayout;
 	private @FXML ChoiceBox<Shop> choiceBox;
-	private ArrayList<Menu> menuList = new ArrayList<>();
+	public static ArrayList<Menu> menuList = new ArrayList<>();
+	public static int[] menuCountAry = new int[100];
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -90,9 +91,13 @@ public class MenuController implements Initializable {
 		if (ctn) {
 			menuList.add(menu);
 			setSumAndTextBottom();
+			
+			menuCountAry[menu.getMenuId()] = menuCountAry[menu.getMenuId()] + 1;
+			
 		} else {
-			if (menuList.contains(menu)) {
-				menuList.set(menuList.indexOf(menu), null);
+			int index = menuList.indexOf(menu);
+			if (index != -1) {
+				menuList.remove(index);
 				setSumAndTextBottom();
 			}
 		}
@@ -113,7 +118,7 @@ public class MenuController implements Initializable {
 
 	private ListView<Menu> setAndGetList(Shop selectedItem) {
 		if (selectedItem != null) { 
-			ArrayList<Menu> d = new MenuDB().findRecordById(ShopDB.columShopId ,selectedItem.getShopId());
+			ArrayList<Menu> d = new MenuDB().findRecordBy(ShopDB.columShopId ,selectedItem.getShopId());
 			ArrayList<Menu> dataList = new ArrayList<>();
 			dataList.addAll(d);
 			ObservableList<Menu> data = (ObservableList<Menu>) FXCollections.observableArrayList(dataList);
@@ -144,7 +149,6 @@ public class MenuController implements Initializable {
 		public void updateItem(Menu item, boolean empty) {
 			super.updateItem(item, empty);
 			if (item != null) {		
-				//TODO : 버튼 2개 spinner로 교체하기
 				btnCount = new Button("+");    
 				btnCount.setOnAction(new EventHandler<ActionEvent>() {
 					@Override

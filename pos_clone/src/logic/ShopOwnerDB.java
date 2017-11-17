@@ -25,7 +25,7 @@ public class ShopOwnerDB extends DatabaseAbstract implements DataProvider {
 	}
 
 	@Override
-	public ArrayList<ShopOwner> findRecordById (String columName, int id) {
+	public ArrayList<ShopOwner> findRecordBy (String columName, int id) {
 		return select("SELECT * FROM "+ dbName + " WHERE " + columName + " = " + id);
 	}
 

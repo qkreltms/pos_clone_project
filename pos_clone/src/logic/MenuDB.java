@@ -22,7 +22,7 @@ public class MenuDB extends DatabaseAbstract implements DataProvider {
 	}
 
 	@Override
-	public ArrayList<Menu> findRecordById (String columName, int id) {
+	public ArrayList<Menu> findRecordBy (String columName, int id) {
 		return select("SELECT * FROM "+ dbName + " WHERE " + columName + " = " + id);
 	}
 	@Override

@@ -23,7 +23,7 @@ public class ShopDB extends DatabaseAbstract implements DataProvider {
 	}
 
 	@Override
-	public ArrayList<Shop> findRecordById (String columName, int id) {
+	public ArrayList<Shop> findRecordBy (String columName, int id) {
 		return select("SELECT * FROM "+ dbName + " WHERE " + columName + " = " + id);
 	}
 

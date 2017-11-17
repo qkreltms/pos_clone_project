@@ -31,7 +31,7 @@ public class OrderDB extends DatabaseAbstract implements DataProvider {
 	}
 
 	@Override
-	public ArrayList<Order> findRecordById (String columName, int id) {
+	public ArrayList<Order> findRecordBy (String columName, int id) {
 		return select("SELECT * FROM "+ dbName + " WHERE " + columName + " = " + id);
 	}
 
@@ -137,6 +137,7 @@ public class OrderDB extends DatabaseAbstract implements DataProvider {
 			preparedStatement.close();
 			cursor.close();
 			
+			if (maxId == 0) return 1;
 			return maxId;
 		} catch (SQLException e) {
 			e.printStackTrace();
