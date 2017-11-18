@@ -2,6 +2,7 @@ package ui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,12 +24,20 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import logic.CustomerDB;
+import logic.DBConnection;
+import logic.ShopDB;
+import logic.ShopOwnerDB;
 import model.Customer;
+import model.DataProvider;
 import model.Menu;
+import model.ShopOwner;
+import tts.Clova;
 
 public class ReceiptController implements Initializable{
 	//TODO : 여기서 commit해주기
@@ -53,7 +62,7 @@ public class ReceiptController implements Initializable{
 		hbox2.getChildren().add(label2);
 		hbox2.setAlignment(Pos.TOP_LEFT);
 		gridPane.add(hbox2, 0, 1);
-		Label label22 = new Label("이디야");
+		Label label22 = new Label(MenuController.selectedShopObj.getShopName());
 		HBox hbox22 = new HBox();
 		hbox22.getChildren().add(label22);
 		hbox22.setAlignment(Pos.TOP_RIGHT);
@@ -64,7 +73,10 @@ public class ReceiptController implements Initializable{
 		hbox3.getChildren().add(label3);
 		hbox3.setAlignment(Pos.TOP_LEFT);
 		gridPane.add(hbox3, 0, 2);
-		Label label33 = new Label("010-123-1234");
+		DataProvider dp = new ShopOwnerDB();
+		@SuppressWarnings({ "unchecked", "unused" })
+		ArrayList<ShopOwner> soList = (ArrayList<ShopOwner>) dp.findRecordBy(ShopOwnerDB.columShopOwnerId, MenuController.selectedShopObj.getOwnerId());
+		Label label33 = new Label(soList.get(0).getShopOwnerPhoneNumber());
 		HBox hbox33 = new HBox();
 		hbox33.getChildren().add(label33);
 		hbox33.setAlignment(Pos.TOP_RIGHT);
@@ -97,7 +109,7 @@ public class ReceiptController implements Initializable{
 		
 		listView = new ListView();
 		listView = setAndGetList(MenuController.menuList); 
-		listView.setMinHeight(100);
+		listView.setMinHeight(210);
 		gridPane.add(listView, 0, 7, 2, 1);
 		
 		int sum = 0;
@@ -177,6 +189,16 @@ public class ReceiptController implements Initializable{
 		hbox26.getChildren().add(label26);
 		hbox26.setAlignment(Pos.TOP_CENTER);
 		gridPane.add(hbox26, 0, 16, 2, 1);
+		
+		Media media = new Media(new Clova("데이터베이스는 오임걸교수님과 함께 하고 10% 학점 보너스도 함께!").fileLoc);  
+		MediaPlayer mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.play();
+		
+		try {
+			DBConnection.getConnection().commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@SuppressWarnings({ "unchecked", "unused" })

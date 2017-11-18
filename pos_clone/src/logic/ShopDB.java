@@ -19,7 +19,12 @@ public class ShopDB extends DatabaseAbstract implements DataProvider {
 	private ArrayList<Shop> list;
 
 	public ShopDB() {
-		con = DBConnection.connect();
+		try {
+			con = DBConnection.connect();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

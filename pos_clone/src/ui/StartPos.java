@@ -25,24 +25,24 @@ public class StartPos extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-//		AnchorPane rootLayout;
-//		this.primaryStage = primaryStage;
-//		this.primaryStage.setTitle("Java & Oracle Team Project : POS");
-//		
-//		FXMLLoader loader = new FXMLLoader();
-//		loader.setLocation(StartPos.class.getResource("receipt.fxml")); //TODO menu로 돌려놓기
-//		rootLayout = (AnchorPane) loader.load();
-//		Scene scene = new Scene(rootLayout);
-		
 		BorderPane rootLayout;
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Java & Oracle Team Project : POS");
 		
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(StartPos.class.getResource("menu.fxml")); //TODO menu로 돌려놓기
+		loader.setLocation(StartPos.class.getResource("signUpPage.fxml")); //TODO menu로 돌려놓기
 		rootLayout = (BorderPane) loader.load();
 		Scene scene = new Scene(rootLayout);
 		
+//		BorderPane rootLayout;
+//		this.primaryStage = primaryStage;
+//		this.primaryStage.setTitle("Java & Oracle Team Project : POS");
+//		
+//		FXMLLoader loader = new FXMLLoader();
+//		loader.setLocation(StartPos.class.getResource("menu.fxml")); //TODO menu로 돌려놓기
+//		rootLayout = (BorderPane) loader.load();
+//		Scene scene = new Scene(rootLayout);
+//		
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

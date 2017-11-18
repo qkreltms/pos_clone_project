@@ -13,7 +13,6 @@ public class DBConnection {
 	public DBConnection() {}
 
 	public static Connection connect() {
-		//재생성 방지
 		if (con == null) {
 			try {
 				Class.forName(jdbcLocation); //http://hiddenviewer.tistory.com/114

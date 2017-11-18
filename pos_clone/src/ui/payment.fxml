@@ -6,19 +6,10 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<BorderPane fx:controller="ui.PaymentController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <left>
-      <Button onAction="#prevScene" mnemonicParsing="false" text="Prve" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <Button onAction="#nextScene" mnemonicParsing="false" text="Next" BorderPane.alignment="CENTER" />
-   </right>
-   <top>
-      <Label text="Payment" BorderPane.alignment="CENTER" />
-   </top>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.PaymentController">
    <center>
       <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -29,6 +20,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="Name" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
@@ -40,4 +32,25 @@
          </children>
       </GridPane>
    </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="20.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <left>
+      <HBox prefHeight="361.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <HBox prefHeight="361.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </right>
+   <top>
+      <HBox prefHeight="16.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#prevScene" text="Prve" />
+                  <Button mnemonicParsing="false" onAction="#nextScene" text="Next" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </top>
 </BorderPane>

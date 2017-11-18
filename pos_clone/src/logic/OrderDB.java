@@ -27,7 +27,12 @@ public class OrderDB extends DatabaseAbstract implements DataProvider {
 	private ArrayList<Order> list;
 
 	public OrderDB() {
-		con = DBConnection.connect();
+		try {
+			con = DBConnection.connect();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -96,7 +101,7 @@ public class OrderDB extends DatabaseAbstract implements DataProvider {
 			PreparedStatement ps;
 			String query = "insert into orders values (?, ?, ?, ?)";
 			ps = con.prepareStatement(query);
-			ps.setInt(1, e.getOrderId());
+			ps.setInt(1, (int)getMaxId()+1);
 			ps.setInt(2, e.getCustId());
 			ps.setDate(3, new Date(System.currentTimeMillis()));
 			ps.setObject(4, menuList);

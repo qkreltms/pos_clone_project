@@ -21,7 +21,12 @@ public class ShopOwnerDB extends DatabaseAbstract implements DataProvider {
 	private ArrayList<ShopOwner> list;
 
 	public ShopOwnerDB() {
-		con = DBConnection.connect();
+		try {
+			con = DBConnection.connect();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

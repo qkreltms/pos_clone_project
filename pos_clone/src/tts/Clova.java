@@ -25,7 +25,7 @@ public class Clova {
 			con.setRequestProperty("X-Naver-Client-Id", clientId);
 			con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
 			// post request
-			String postParams = "speaker=mijin&speed=0&text=" + encodedText;
+			String postParams = "speaker=jinho&speed=0&text=" + encodedText;
 			con.setDoOutput(true);
 			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 			wr.writeBytes(postParams);

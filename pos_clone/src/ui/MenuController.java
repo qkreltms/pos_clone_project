@@ -2,7 +2,9 @@ package ui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
@@ -27,6 +29,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
@@ -37,9 +41,9 @@ import model.DataProvider;
 import model.Menu;
 import model.Order;
 import model.Shop;
+import tts.Clova;
 
 //TODO : 로그인 화면 만들어서 디비 아이디, 페스워드 받기
-//TODO : exe파일 만들기 https://www.youtube.com/watch?v=CQEPlGFYTr8
 
 public class MenuController implements Initializable {
 	private ListView<Menu> list = new ListView<>();
@@ -48,9 +52,14 @@ public class MenuController implements Initializable {
 	private @FXML ChoiceBox<Shop> choiceBox;
 	public static ArrayList<Menu> menuList = new ArrayList<>();
 	public static int[] menuCountAry = new int[100];
+	public static Shop selectedShopObj;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		Media media = new Media(new Clova("안녕하세요 고객님 어떤 매뉴를 주문하시겠습니까?").fileLoc);  
+		MediaPlayer mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.play();
+		
 		setChoiceBoxAndInitList(new ShopDB());
 		rootLayout.setCenter(list);
 	}
@@ -79,10 +88,12 @@ public class MenuController implements Initializable {
 		.getSelectionModel()
 		.selectedIndexProperty()
 		.addListener(new ChangeListener<Number>() {
-
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				selectedMenu.setText("");
+				menuList.clear();
 				list = setAndGetList(shopList.get((Integer)newValue));
+				selectedShopObj = choiceBox.getItems().get((Integer)newValue);
 			}
 		});
 	}
@@ -91,9 +102,9 @@ public class MenuController implements Initializable {
 		if (ctn) {
 			menuList.add(menu);
 			setSumAndTextBottom();
-			
+
 			menuCountAry[menu.getMenuId()] = menuCountAry[menu.getMenuId()] + 1;
-			
+
 		} else {
 			int index = menuList.indexOf(menu);
 			if (index != -1) {
@@ -180,13 +191,21 @@ public class MenuController implements Initializable {
 	}
 
 	@FXML private void nextScene(ActionEvent event) throws IOException {
+		String menuToSpeech = "";
+		for (Menu i : menuList) {
+			menuToSpeech = menuToSpeech + i.getMenuName();
+		}
+		Media media = new Media(new Clova("선택하신 매뉴는 " + menuToSpeech + "입니다. 결재하시겠습니까?").fileLoc);  
+		MediaPlayer mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.play();
+		
 		if (! menuList.isEmpty()) {
 			FXMLLoader nextPage = new FXMLLoader(this.getClass().getResource("payment.fxml"));
 			Parent root = (Parent) nextPage.load();
-			
+
 			PaymentController paymentController = nextPage.getController();
 			paymentController.setMenuList(menuList);
-			
+
 			Scene nextPageScene = new Scene(root);
 			Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			thisStage.setScene(nextPageScene);
@@ -196,5 +215,13 @@ public class MenuController implements Initializable {
 
 	public ArrayList<Menu> getMenuList() {
 		return menuList;
+	}
+
+	@FXML public void prevScene(ActionEvent event) throws IOException {
+		Parent nextPage = FXMLLoader.load(this.getClass().getResource("index.fxml"));
+		Scene nextPageScene = new Scene(nextPage);
+		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		thisStage.setScene(nextPageScene);
+		thisStage.show();
 	}
 }

@@ -27,9 +27,9 @@ public class PaymentController implements Initializable{
 	private @FXML TextField tfName;
 	private @FXML TextField tfPhone;
 	private @FXML TextField tfCard;
-	private String name;
-	private String phone;
-	private String card;
+	private String name = null;
+	private String phone = null;
+	private String card = null;
 	private ArrayList<Menu> menuList;
 	public static Customer cust;
 
@@ -62,41 +62,45 @@ public class PaymentController implements Initializable{
 	}
 
 	@FXML private void nextScene(ActionEvent event) throws IOException {
-		insertIntoCustomerDB();
-		insertIntoOrderDB();
+		if (insertIntoCustomerDB()) {
+			insertIntoOrderDB();
+			FXMLLoader nextPage = new FXMLLoader(this.getClass().getResource("receipt.fxml"));
+			Parent root = (Parent) nextPage.load();
 
-		FXMLLoader nextPage = new FXMLLoader(this.getClass().getResource("receipt.fxml"));
-		Parent root = (Parent) nextPage.load();
-		
-//		nextPage.setController(ReceiptController.class);
-//		ReceiptController controller = nextPage.getController(); //왜 안돼지?? TODO: static 안쓰기 
-//		controller.setCust(cust);
+			//		nextPage.setController(ReceiptController.class);
+			//		ReceiptController controller = nextPage.getController(); //왜 안돼지?? TODO: static 안쓰기 
+			//		controller.setCust(cust);
 
-		
-		Scene nextPageScene = new Scene(root);
-		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		thisStage.setScene(nextPageScene);
-		thisStage.show();
+
+			Scene nextPageScene = new Scene(root);
+			Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			thisStage.setScene(nextPageScene);
+			thisStage.show();
+		}
 	}
 
-	private void insertIntoCustomerDB() {
+	private boolean insertIntoCustomerDB() {
 		if (name != null && phone != null && card != null) { 
-			CustomerDB custDB = new CustomerDB();
-			cust = new Customer(name, phone, card);
-	
-			custDB.insert(cust);
-			custDB.getAllData();
+			if (name.length() > 1 && phone.length() > 1 && card.length() > 1) {
+				CustomerDB custDB = new CustomerDB();
+				cust = new Customer(name, phone, card);
+
+				custDB.insert(cust);
+				custDB.getAllData();
+
+				return true;
+			}
 		}
+		return false;
 	}
 
 	private void insertIntoOrderDB() {
 		DataProvider dataProvider = new OrderDB();
-		int orderId = (int)dataProvider.getMaxId();
-		
+
 		CustomerDB custDB = new CustomerDB();
 		int custId = (int) custDB.getMaxId();
-		
-		dataProvider.insert(new Order(orderId, custId, menuList));
+
+		dataProvider.insert(new Order(custId, menuList));
 		dataProvider.getAllData();
 	}
 
@@ -112,7 +116,7 @@ public class PaymentController implements Initializable{
 	public void setMenuList(ArrayList<Menu> menuList) {
 		this.menuList = menuList;
 	}
-	
+
 	public Customer getCust() {
 		return cust;
 	}

@@ -18,7 +18,12 @@ public class MenuDB extends DatabaseAbstract implements DataProvider {
 	private ArrayList<Menu> list;
 
 	public MenuDB() {
-		con = DBConnection.connect();
+		try {
+			con = DBConnection.connect();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

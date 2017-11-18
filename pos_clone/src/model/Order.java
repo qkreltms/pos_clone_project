@@ -15,8 +15,7 @@ public class Order {
 		this.orderDate = orderDate;
 		this.menuList = menuList;
 	}
-	//시간이 자동 생성될때 아래것 사용
-	public Order(int orderId, int custId, ArrayList<Menu> menuList) {
+	public Order(int custId, ArrayList<Menu> menuList) {
 		this.orderId = orderId;
 		this.custId = custId;
 		this.menuList = menuList;

@@ -18,8 +18,13 @@ public class CustomerDB extends DatabaseAbstract implements DataProvider {
 	public static String columCustomerId = "customer_id";
 	private ArrayList<Customer> list;
 
-	public CustomerDB() {
-		con = DBConnection.connect();
+	public CustomerDB()  {
+		try {
+			con = DBConnection.connect();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
