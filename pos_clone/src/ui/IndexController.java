@@ -22,11 +22,18 @@ public class IndexController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//TODO : 积己等 mp3颇老 昏力窍扁
 	}
 
-	@FXML void order(ActionEvent event) throws IOException {
+	@FXML void moveToorder(ActionEvent event) throws IOException {
 		Parent nextPage = FXMLLoader.load(this.getClass().getResource("menu.fxml"));
+		Scene nextPageScene = new Scene(nextPage);
+		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		thisStage.setScene(nextPageScene);
+		thisStage.show();
+	}
+
+	@FXML public void moveToStock(ActionEvent event) throws IOException {
+		Parent nextPage = FXMLLoader.load(this.getClass().getResource("stock.fxml"));
 		Scene nextPageScene = new Scene(nextPage);
 		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		thisStage.setScene(nextPageScene);

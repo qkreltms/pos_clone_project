@@ -12,16 +12,16 @@
    <top>
       <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="32.0" prefWidth="197.0">
+            <HBox prefWidth="197.0">
                <children>
-                  <Button mnemonicParsing="false" text="Prev" onAction="#prevScene" />
+                  <Button mnemonicParsing="false" onAction="#prevScene" text="Prev" />
                   <Button mnemonicParsing="false" onAction="#nextScene" text="Next" />
                </children>
                <HBox.margin>
                   <Insets />
                </HBox.margin>
             </HBox>
-            <ChoiceBox fx:id="choiceBox" prefHeight="32.0" prefWidth="238.0" />
+            <ChoiceBox fx:id="choiceBox" prefWidth="200.0" />
             <HBox HBox.hgrow="ALWAYS" />
          </children>
       </HBox>

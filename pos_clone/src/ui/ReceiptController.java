@@ -12,6 +12,8 @@ import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,6 +21,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -31,7 +34,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import logic.CustomerDB;
 import logic.DBConnection;
-import logic.ShopDB;
 import logic.ShopOwnerDB;
 import model.Customer;
 import model.DataProvider;
@@ -40,7 +42,6 @@ import model.ShopOwner;
 import tts.Clova;
 
 public class ReceiptController implements Initializable{
-	//TODO : 여기서 commit해주기
 	@FXML GridPane gridPane;
 	@SuppressWarnings("rawtypes")
 	private ListView listView;
@@ -190,9 +191,23 @@ public class ReceiptController implements Initializable{
 		hbox26.setAlignment(Pos.TOP_CENTER);
 		gridPane.add(hbox26, 0, 16, 2, 1);
 		
-		Media media = new Media(new Clova("데이터베이스는 오임걸교수님과 함께 하고 10% 학점 보너스도 함께!").fileLoc);  
-		MediaPlayer mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.play();
+		Button btn = new Button("OK");
+		btn.setOnAction(new EventHandler<ActionEvent>() {			
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					moveToIndex(event);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		HBox hbox27 = new HBox();
+		hbox27.getChildren().add(btn);
+		hbox27.setAlignment(Pos.TOP_CENTER);
+		gridPane.add(hbox27, 0, 17, 2, 1);
+		
+		startVoice();
 		
 		try {
 			DBConnection.getConnection().commit();
@@ -201,6 +216,19 @@ public class ReceiptController implements Initializable{
 		}
 	}
 	
+	public void moveToIndex(ActionEvent event) throws IOException {
+		Parent nextPage = FXMLLoader.load(this.getClass().getResource("index.fxml"));
+		Scene nextPageScene = new Scene(nextPage);
+		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		thisStage.setScene(nextPageScene);
+		thisStage.show();
+	}
+	
+	public void startVoice() {
+		Media media = new Media(new Clova("데이터베이스는 오임걸교수님과 함께 하고 10% 학점 보너스도 함께!").fileLoc);  
+		MediaPlayer mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.play();
+	}
 	@SuppressWarnings({ "unchecked", "unused" })
 	private ListView<Menu> setAndGetList(ArrayList<Menu> orderedList) {
 		Set<?> set = new HashSet<>(orderedList);

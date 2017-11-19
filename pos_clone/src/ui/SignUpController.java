@@ -26,15 +26,22 @@ public class SignUpController implements Initializable{
 	@FXML PasswordField pfInput;
 	@FXML TextField tfInput;
 	@FXML Label textError;
-
+	//가비지컬렉터가 인스턴스 삭제하는 것으로 보임 밖으로 빼줌.
+	Media media;
+	MediaPlayer mediaPlayer;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		//TODO : 쓰레드에서 돌리기
+		startVoice();
+	}
+	
+	public void startVoice() {
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("hh시 mm분 ss초");
-		Media media = new Media(new Clova("현재시간은 " + sdf.format(today) + "입니다. 좋은하루되세요").fileLoc);  
-		MediaPlayer mediaPlayer = new MediaPlayer(media);
+		media = new Media(new Clova("현재시간은 " + sdf.format(today) + "입니다. 좋은하루되세요").fileLoc);  
+		mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.play();
+	
 	}
 
 	@FXML public void nextScene(ActionEvent event) throws IOException {

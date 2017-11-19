@@ -20,8 +20,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="150.0" prefWidth="309.0" text="재고 관리" />
-            <Button onAction="#order" mnemonicParsing="false" prefHeight="217.0" prefWidth="361.0" text="물품 주문" GridPane.columnIndex="1" />
+            <Button onAction="#moveToStock" mnemonicParsing="false" prefHeight="150.0" prefWidth="309.0" text="재고 관리" />
+            <Button onAction="#moveToorder" mnemonicParsing="false" prefHeight="217.0" prefWidth="361.0" text="물품 주문" GridPane.columnIndex="1" />
             <Button mnemonicParsing="false" prefHeight="252.0" prefWidth="385.0" text="상품 수정" GridPane.rowIndex="1" />
          </children>
       </GridPane>

@@ -18,7 +18,7 @@ import model.Menu;
 public class StartPos extends Application {
 	private Stage primaryStage; //띄울 fxml파일
 
-
+	//TODO : 비어있을때도 작동되도록 null 처리해주기
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -30,7 +30,7 @@ public class StartPos extends Application {
 		this.primaryStage.setTitle("Java & Oracle Team Project : POS");
 		
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(StartPos.class.getResource("signUpPage.fxml")); //TODO menu로 돌려놓기
+		loader.setLocation(StartPos.class.getResource("signUpPage.fxml")); 
 		rootLayout = (BorderPane) loader.load();
 		Scene scene = new Scene(rootLayout);
 		
@@ -39,7 +39,7 @@ public class StartPos extends Application {
 //		this.primaryStage.setTitle("Java & Oracle Team Project : POS");
 //		
 //		FXMLLoader loader = new FXMLLoader();
-//		loader.setLocation(StartPos.class.getResource("menu.fxml")); //TODO menu로 돌려놓기
+//		loader.setLocation(StartPos.class.getResource("menu.fxml"));
 //		rootLayout = (BorderPane) loader.load();
 //		Scene scene = new Scene(rootLayout);
 //		
