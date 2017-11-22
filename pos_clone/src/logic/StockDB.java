@@ -96,7 +96,19 @@ public class StockDB extends DatabaseAbstract implements DataProvider{
 
 	@Override
 	public boolean update(Object o) {
-		// TODO Auto-generated method stub
+		Stock s = (Stock) o;
+		String updateSQL = "update menu_stock set menu_stock_count = " 
+		+ s.getQuantity() +
+		" where menu_id = " 
+		+ s.getMenuId();
+		
+		try {
+		Statement statement = con.createStatement();
+		statement.execute(updateSQL);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 

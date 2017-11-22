@@ -2,9 +2,7 @@ package ui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
@@ -21,7 +19,6 @@ import javafx.util.Callback;
 import logic.OrderDB;
 import model.Menu;
 import model.Order;
-import model.Shop;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
@@ -77,8 +74,8 @@ class CellForOrder extends ListCell<Order> {
 		if (item != null) {		
 			Label lbOrderId = new Label(String.valueOf(item.getOrderId()));
 			Label lbCustId = new Label(String.valueOf(item.getCustId()));
-			
 			Label lbOrderDate = new Label(item.getOrderDate() + "");
+			
 			String menuName = "";
 			String menuPrice = "";
 			for (Menu i : item.getMenuList()) {

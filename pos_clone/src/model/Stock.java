@@ -17,6 +17,10 @@ public class Stock {
 		this.shopId = shopId;
 		this.quantity = quantity;
 	}
+	public Stock(int menuId, int quantity) {
+		this.menuId = menuId;
+		this.quantity = quantity;
+	}
 	public int getStockId() {
 		return stockId;
 	}

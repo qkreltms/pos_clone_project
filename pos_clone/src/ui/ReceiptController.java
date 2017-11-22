@@ -209,6 +209,9 @@ public class ReceiptController implements Initializable{
 		
 		startVoice();
 		
+	}
+	
+	private void commit() {
 		try {
 			DBConnection.getConnection().commit();
 		} catch (SQLException e) {
@@ -217,6 +220,8 @@ public class ReceiptController implements Initializable{
 	}
 	
 	public void moveToIndex(ActionEvent event) throws IOException {
+		commit();
+		
 		Parent nextPage = FXMLLoader.load(this.getClass().getResource("index.fxml"));
 		Scene nextPageScene = new Scene(nextPage);
 		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
