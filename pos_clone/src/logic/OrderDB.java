@@ -24,6 +24,7 @@ public class OrderDB extends DatabaseAbstract implements DataProvider {
 	private Connection con;
 	public final static String dbName = "orders";
 	public static String columOrderId = "orders_id";
+	public static String columShopId = "orders_shop_id";
 	private ArrayList<Order> list;
 
 	public OrderDB() {

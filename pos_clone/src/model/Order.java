@@ -16,7 +16,6 @@ public class Order {
 		this.menuList = menuList;
 	}
 	public Order(int custId, ArrayList<Menu> menuList) {
-		this.orderId = orderId;
 		this.custId = custId;
 		this.menuList = menuList;
 	}

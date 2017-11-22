@@ -8,18 +8,18 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.StockController">
+<BorderPane fx:id="rootLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.StockController">
    <top>
       <HBox BorderPane.alignment="CENTER">
          <children>
             <HBox prefWidth="200.0">
                <children>
                   <Button fx:id="btnPrev" mnemonicParsing="false" onAction="#moveToPrev" text="Prev" />
-                  <RadioButton mnemonicParsing="false" prefHeight="23.0" text="Order  ">
+                  <RadioButton fx:id="rbOrder" mnemonicParsing="false" prefHeight="23.0" text="Order  ">
                      <toggleGroup>
                         <ToggleGroup fx:id="orderOrStock" />
                      </toggleGroup></RadioButton>
-                  <RadioButton mnemonicParsing="false" prefHeight="23.0" text="Stock  " toggleGroup="$orderOrStock" />
+                  <RadioButton fx:id="rbStock" mnemonicParsing="false" prefHeight="23.0" text="Stock  " toggleGroup="$orderOrStock" />
                </children>
             </HBox>
             <HBox>
@@ -32,6 +32,6 @@
       </HBox>
    </top>
    <center>
-      <ListView fx:id="lvStockList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <ListView fx:id="listView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

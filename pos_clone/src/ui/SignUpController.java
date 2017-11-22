@@ -38,10 +38,13 @@ public class SignUpController implements Initializable{
 	public void startVoice() {
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("hh시 mm분 ss초");
+		try { //Media 널처리해주기
 		media = new Media(new Clova("현재시간은 " + sdf.format(today) + "입니다. 좋은하루되세요").fileLoc);  
 		mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.play();
-	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML public void nextScene(ActionEvent event) throws IOException {

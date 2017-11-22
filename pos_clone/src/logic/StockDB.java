@@ -14,6 +14,7 @@ public class StockDB extends DatabaseAbstract implements DataProvider{
 	private Connection con;
 	public final static String dbName = "menu_stock";
 	public static String columMenuId = "menu_id";
+	public static String columShopId = "menu_shop_id";
 	private ArrayList<Stock> list;
 
 	public StockDB() {
