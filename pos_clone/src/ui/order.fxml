@@ -6,21 +6,22 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="rootLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.StockController">
+
+<BorderPane fx:controller="ui.OrderController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox BorderPane.alignment="CENTER">
          <children>
             <HBox prefWidth="200.0">
                <children>
-                  <Button fx:id="btnPrev" mnemonicParsing="false" onAction="#moveToPrev" text="Prev" />
+                  <Button onAction="#moveToPrev" mnemonicParsing="false" text="Prev" />
                </children>
             </HBox>
-            <HBox>
+            <HBox alignment="TOP_CENTER" prefWidth="200.0">
                <children>
-                  <ChoiceBox fx:id="cbSelectShop" prefWidth="200.0" />
+                  
                </children>
             </HBox>
-            <HBox alignment="TOP_RIGHT" prefWidth="200.0" />
+            <HBox prefWidth="200.0" />
          </children>
       </HBox>
    </top>

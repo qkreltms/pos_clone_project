@@ -23,65 +23,28 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Toggle;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import logic.MenuDB;
-import logic.OrderDB;
 import logic.ShopDB;
 import logic.StockDB;
 import model.DataProvider;
 import model.Menu;
-import model.Order;
 import model.Shop;
 import model.Stock;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.control.RadioButton;
 
 //TODO : update 하기
 public class StockController implements Initializable {
 	@FXML Button btnPrev;
-	@FXML Button btnNext;
-	@FXML Button btnUpdate;
-	@FXML Button btnDelete;
 	@FXML ChoiceBox<Shop> cbSelectShop;
 	DataProvider dp = new StockDB();
-	@FXML ToggleGroup orderOrStock;
-	int menu = 0;
-	@FXML BorderPane rootLayout;
-	@FXML RadioButton rbOrder;
-	@FXML RadioButton rbStock;
-	@SuppressWarnings("rawtypes")
-	@FXML ListView listView;
+	@FXML ListView<Menu> listView;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		rbOrder.setUserData("order");
-		rbStock.setUserData("stock");
-
 		setChoiceBoxAndInitList(new ShopDB());
-		addListenerOnRadioBtn();
-	}
-
-	public void addListenerOnRadioBtn () {
-		orderOrStock.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-			@Override
-			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-				if (orderOrStock.getSelectedToggle() != null) {
-					switch (orderOrStock.getSelectedToggle().getUserData().toString()) {
-					case "order" :
-						menu = 0;
-						break;
-					case "stock" :
-						menu = 1;
-						break;
-					}
-				}
-			}
-		});
 	}
 
 	@SuppressWarnings("unchecked")
@@ -115,40 +78,18 @@ public class StockController implements Initializable {
 		});
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private ListView setList(Shop selectedItem) {
-		if (selectedItem != null) { 
-			if (menu == 0) {
-				//오더에서 
-				ArrayList<Order> d = new OrderDB().findRecordBy(OrderDB.columShopId ,selectedItem.getShopId());
-				ArrayList<Order> dataList = new ArrayList<>();
-				dataList.addAll(d);
-				ObservableList<Order> data = (ObservableList<Order>) FXCollections.observableArrayList(dataList);
+	private ListView<Menu> setList(Shop selectedItem) {
+		ArrayList<Menu> m = new MenuDB().findRecordBy(ShopDB.columShopId ,selectedItem.getShopId());
+		ObservableList<Menu> data = (ObservableList<Menu>) FXCollections.observableArrayList(m);
 
-				listView.setItems(data);
-				listView.setCellFactory(new Callback<ListView<Order>, ListCell<Order>>() {
-					@Override 
-					public ListCell<Order> call(ListView<Order> data) {
-						return new CellForOrder();
-					}
-				});
-			} else if (menu == 1) {
-				ArrayList<Menu> d = new MenuDB().findRecordBy(ShopDB.columShopId ,selectedItem.getShopId());
-				ArrayList<Menu> dataList = new ArrayList<>();
-				dataList.addAll(d);
-				ObservableList<Menu> data = (ObservableList<Menu>) FXCollections.observableArrayList(dataList);
-
-				listView.setItems(data);
-				listView.setCellFactory(new Callback<ListView<Menu>, ListCell<Menu>>() {
-					@Override 
-					public ListCell<Menu> call(ListView<Menu> data) {
-						return new Cell();
-					}
-				});
+		listView.setItems(data);
+		listView.setCellFactory(new Callback<ListView<Menu>, ListCell<Menu>>() {
+			@Override 
+			public ListCell<Menu> call(ListView<Menu> data) {
+				return new Cell();
 			}
-			return listView;
-		}
-		return null;
+		});
+		return listView;
 	}
 
 	@FXML public void moveToPrev(ActionEvent event) throws IOException {
@@ -157,38 +98,6 @@ public class StockController implements Initializable {
 		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		thisStage.setScene(nextPageScene);
 		thisStage.show();
-	}
-}
-
-class CellForOrder extends ListCell<Order> {
-	HBox hbox;
-	Button btnCount;
-	Button btnDeCount;
-	Label label;
-	Label labelCtn;
-	ArrayList<Integer> btnItem;
-
-	@Override
-	public void updateItem(Order item, boolean empty) {
-		super.updateItem(item, empty);
-		if (item != null) {		
-			Label lbOrderId = new Label(String.valueOf(item.getOrderId()));
-			Label lbCustId = new Label(String.valueOf(item.getCustId()));
-			Label lbOrderDate = new Label(String.valueOf(item.getOrderDate()));
-			String menuName = "";
-			String menuPrice = "";
-			for (Menu i : item.getMenuList()) {
-				menuName = menuName + i.getMenuName();
-				menuPrice = menuPrice + i.getMenuPrice();
-			}
-			Label lbMenuName = new Label(menuName);
-			Label lbMenuPrice = new Label(menuPrice);
-
-			hbox = new HBox();
-			hbox.setAlignment(Pos.CENTER);
-			hbox.getChildren().addAll(lbOrderId, lbCustId, lbOrderDate, lbMenuName, lbMenuPrice);
-			setGraphic(hbox);
-		}
 	}
 }
 

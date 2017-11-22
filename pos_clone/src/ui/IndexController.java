@@ -39,4 +39,12 @@ public class IndexController implements Initializable{
 		thisStage.setScene(nextPageScene);
 		thisStage.show();
 	}
+
+	@FXML public void moveToOrder(ActionEvent event) throws IOException {
+		Parent nextPage = FXMLLoader.load(this.getClass().getResource("order.fxml"));
+		Scene nextPageScene = new Scene(nextPage);
+		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		thisStage.setScene(nextPageScene);
+		thisStage.show();
+	}
 }
