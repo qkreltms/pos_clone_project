@@ -20,9 +20,9 @@
         </rowConstraints>
          <children>
             <Button mnemonicParsing="false" onAction="#moveToStock" prefHeight="150.0" prefWidth="309.0" text="재고 관리" />
-            <Button mnemonicParsing="false" onAction="#moveToorder" prefHeight="217.0" prefWidth="361.0" text="물품 주문" GridPane.columnIndex="1" />
-            <Button mnemonicParsing="false" prefHeight="252.0" prefWidth="385.0" text="상품 수정" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" onAction="#moveToOrder" prefHeight="133.0" prefWidth="397.0" text="판매 목록" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#moveToOrder" prefHeight="217.0" prefWidth="361.0" text="물품 주문" GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" onAction="#moveToModify" prefHeight="252.0" prefWidth="385.0" text="상품 수정" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#moveToOrderedList" prefHeight="133.0" prefWidth="397.0" text="판매 목록" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </center>

@@ -126,9 +126,9 @@ public class MenuController implements Initializable {
 		selectedMenu.setText(textBottom + "\n" + "ÃÑ ÇÕ = " + sum);
 	}
 
-	private ListView<Menu> setAndGetList(Shop selectedItem) {
-		if (selectedItem != null) { 
-			ArrayList<Menu> d = new MenuDB().findRecordBy(ShopDB.columShopId ,selectedItem.getShopId());
+	private ListView<Menu> setAndGetList(Shop selectedShop) {
+		if (selectedShop != null) { 
+			ArrayList<Menu> d = new MenuDB().findRecordBy(ShopDB.columShopId ,selectedShop.getShopId());
 			ArrayList<Menu> dataList = new ArrayList<>();
 			dataList.addAll(d);
 			ObservableList<Menu> data = (ObservableList<Menu>) FXCollections.observableArrayList(dataList);

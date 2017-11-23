@@ -127,6 +127,5 @@ public class CustomerDB extends DatabaseAbstract implements DataProvider {
 			e.printStackTrace();
 		}
 		return 0;
-	}
-	
+	}	
 }	

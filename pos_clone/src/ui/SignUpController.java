@@ -29,6 +29,7 @@ public class SignUpController implements Initializable{
 	//가비지컬렉터가 인스턴스 삭제하는 것으로 보임 밖으로 빼줌.
 	Media media;
 	MediaPlayer mediaPlayer;
+	@FXML TextField tfDbName;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -58,10 +59,10 @@ public class SignUpController implements Initializable{
 	}
 
 	public boolean checkIdAndPw() {
+		
 		String id = "system";
 		String pw = "111111";
 
-		//TODO : 제대로 만들기
 		if (id.equals(tfInput.getText()) && pw.equals(pfInput.getText())) {
 			//DBConnection.userId = id;
 			//DBConnection.pwd = pw;

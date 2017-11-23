@@ -3,15 +3,17 @@ package logic;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DBConnection {
-	private static String userId = "system";
-	private static String pwd = "111111";
-	private static String dbName = "orcl";
+	public static String userId = "system";
+	public static String pwd = "111111";
+	public static String dbName = "orcl";
 	private static String jdbcLocation = "oracle.jdbc.driver.OracleDriver";
 	private static Connection con = null;
 	public DBConnection() {}
-
+	
+	
 	public static Connection connect() {
 		if (con == null) {
 			try {
