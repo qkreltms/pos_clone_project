@@ -12,10 +12,10 @@
          <children>
             <HBox prefHeight="23.0" prefWidth="228.0">
                <children>
-                  <Button mnemonicParsing="false" text="Prev" />
-                  <Button mnemonicParsing="false" text="Update" />
-                  <Button mnemonicParsing="false" text="Delete" />
-                  <Button mnemonicParsing="false" text="Add" />
+                  <Button fx:id="btnPrev" onAction="#moveToPrev" mnemonicParsing="false" text="Prev" />
+                  <Button fx:id="btnUpdate" onAction="#update" mnemonicParsing="false" text="Update" />
+                  <Button fx:id="btnDelete" onAction="#delete" mnemonicParsing="false" text="Delete" />
+                  <Button fx:id="btnAdd" onAction="#add" mnemonicParsing="false" text="Add" />
                </children>
             </HBox>
             <HBox prefWidth="200.0">

@@ -22,9 +22,11 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 import logic.MenuDB;
 import logic.ShopDB;
+import logic.StockDB;
 import model.DataProvider;
 import model.Menu;
 import model.Shop;
+import model.Stock;
 import javafx.scene.control.RadioButton;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -35,21 +37,25 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ChoiceBox;
 
-public class ModifyController implements Initializable{
-	@FXML ToggleGroup modifyOrDelete;
-	@FXML RadioButton rbModify;
-	@FXML RadioButton rbDelete;
+public class ModifyController implements Initializable{  
 	@FXML ListView<Menu> listView;
 	@FXML ChoiceBox<Shop> choice_box;
+	@FXML Button btnPrev;
+	@FXML Button btnUpdate;
+	@FXML Button btnDelete;
+	@FXML Button btnAdd;
+	private int option = 0;
+	private Shop shop;
+	public static Menu menu;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {	
 		setChoiceBoxAndInitList(new ShopDB());
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	private void setChoiceBoxAndInitList(DataProvider shop) {
-		ArrayList<Shop> shopList = (ArrayList<Shop>) new ArrayList<>(shop.getAllData());
+	private void setChoiceBoxAndInitList(DataProvider dp) {
+		ArrayList<Shop> shopList = (ArrayList<Shop>) new ArrayList<>(dp.getAllData());
 
 		for (Shop i : shopList) {
 			choice_box.getItems().addAll(i);
@@ -73,11 +79,12 @@ public class ModifyController implements Initializable{
 		.addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				listView = setList(shopList.get((Integer)newValue));
+				shop = shopList.get((Integer)newValue);
+				listView = setList(shop);
 			}
 		});
 	}
-	
+
 	private ListView<Menu> setList(Shop selectedShop) {
 		ArrayList<Menu> d = new MenuDB().findRecordBy(ShopDB.columShopId ,selectedShop.getShopId());
 		ObservableList<Menu> data = (ObservableList<Menu>) FXCollections.observableArrayList(d);
@@ -101,35 +108,69 @@ public class ModifyController implements Initializable{
 		thisStage.show();
 	}
 
-}
+	@FXML public void update(ActionEvent event) {
+		option = 1;
+	}
 
-class CellForMenu extends ListCell<Menu> {
-	HBox hbox;
-	Button btn;
-	Label label;
-	ArrayList<Integer> btnItem;
+	@FXML public void delete(ActionEvent event) {
+		option = 2;
+	}
 
-	@Override
-	public void updateItem(Menu item, boolean empty) {
-		super.updateItem(item, empty);
-		if (item != null) {		
-			btn = new Button(" ");    
-			btn.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event) {
-					System.out.println("MenuName = " + getItem().getMenuName() 
-							+ " Id = " + getItem().getMenuId());
-					
-				}
-			});
+	@FXML public void add(ActionEvent event) {
+		option = 3;
+	}
 
-			label = new Label(item.getMenuName());
+	private void modify(Menu menu) {
+		switch(option) {
+		case 1 :
+			new Dialog().displyUpdete(menu);
+			DataProvider dp = new MenuDB();
+			dp.update(menu);
+			listView = 	setList(shop);
+			break;
+		case 2 :
+			break;
+		case 3 :
+			break;
+		default : 
+			break;
+		}
+	}
+	
+	public void setModifiedMenuFromDialog(Menu menu) {
+		this.menu = menu;
+	}
 
-			hbox = new HBox();
-			hbox.setAlignment(Pos.CENTER);
-			hbox.getChildren().addAll(label, btn);
-			setGraphic(hbox);
+	class CellForMenu extends ListCell<Menu> {
+		HBox hbox;
+		Button btn;
+		Label label;
+		ArrayList<Integer> btnItem;
+
+		@Override
+		public void updateItem(Menu item, boolean empty) {
+			super.updateItem(item, empty);
+			if (item != null) {		
+				btn = new Button(" ");    
+				btn.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						System.out.println("MenuName = " + getItem().getMenuName() 
+								+ " Id = " + getItem().getMenuId());
+						modify(item);
+					}
+				});
+
+				label = new Label(item.getMenuName());
+
+				hbox = new HBox();
+				hbox.setAlignment(Pos.CENTER);
+				hbox.getChildren().addAll(label, btn);
+				setGraphic(hbox);
+			}
 		}
 	}
 }
+
+
 

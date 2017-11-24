@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import model.DataProvider;
 import model.Menu;
+import model.Stock;
 
 
 public class MenuDB extends DatabaseAbstract implements DataProvider {
@@ -96,7 +97,23 @@ public class MenuDB extends DatabaseAbstract implements DataProvider {
 
 	@Override
 	public boolean update(Object o) {
-		// TODO Auto-generated method stub
+		Menu m = (Menu) o;
+		String updateSQL = "update menu set menu_name = " 
+		+ "'" + m.getMenuName() + "'" 
+		+ ", menu_price ="
+		+ m.getMenuPrice() 
+		+ ", shop_id ="
+		+ m.getShopId() +
+		" where menu_id = " 
+		+ m.getMenuId();
+		
+		try {
+		Statement statement = con.createStatement();
+		statement.execute(updateSQL);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 

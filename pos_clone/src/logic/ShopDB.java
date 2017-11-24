@@ -22,7 +22,6 @@ public class ShopDB extends DatabaseAbstract implements DataProvider {
 		try {
 			con = DBConnection.connect();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
