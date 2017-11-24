@@ -20,7 +20,7 @@ public class DBConnection {
 				Class.forName(jdbcLocation); //http://hiddenviewer.tistory.com/114
 				String url = "jdbc:oracle:thin:@localhost:1521:" + dbName;
 				con = DriverManager.getConnection(url, userId, pwd);
-				con.setAutoCommit(false); //autoCommit false because we need to save at last 
+				con.setAutoCommit(false); //autoCommit false because we need to save it at last 
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (SQLException e) {
