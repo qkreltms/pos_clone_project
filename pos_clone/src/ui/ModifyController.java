@@ -45,6 +45,9 @@ public class ModifyController implements Initializable{
 	@FXML Button btnDelete;
 	@FXML Button btnAdd;
 	private int option = 0;
+	private final int UPDATE = 1;
+	private final int DELETE = 2;
+	private final int ADD = 3;
 	private Shop shop;
 	public static Menu menu;
 
@@ -107,30 +110,37 @@ public class ModifyController implements Initializable{
 		thisStage.setScene(nextPageScene);
 		thisStage.show();
 	}
-
+	
+	//버튼 클릭시 option 값 설정.
 	@FXML public void update(ActionEvent event) {
-		option = 1;
+		option = UPDATE;
 	}
 
 	@FXML public void delete(ActionEvent event) {
-		option = 2;
+		option = DELETE;
 	}
 
 	@FXML public void add(ActionEvent event) {
-		option = 3;
+		option = ADD;
 	}
 
 	private void modify(Menu menu) {
+		DataProvider dp = new MenuDB();
+		
 		switch(option) {
-		case 1 :
+		case UPDATE :
 			new Dialog().displyUpdete(menu);
-			DataProvider dp = new MenuDB();
 			dp.update(menu);
 			listView = 	setList(shop);
 			break;
-		case 2 :
+		case DELETE :
+			dp.delete(menu);
+			listView = 	setList(shop);
 			break;
-		case 3 :
+		case ADD :
+			new Dialog().displyUpdete(menu);
+			dp.update(menu);
+			listView = 	setList(shop);
 			break;
 		default : 
 			break;

@@ -109,7 +109,7 @@ public class MenuDB extends DatabaseAbstract implements DataProvider {
 		
 		try {
 		Statement statement = con.createStatement();
-		statement.execute(updateSQL);
+		statement.executeUpdate(updateSQL);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -119,7 +119,27 @@ public class MenuDB extends DatabaseAbstract implements DataProvider {
 
 	@Override
 	public boolean delete(Object o) {
-		// TODO Auto-generated method stub
+		Menu m = (Menu) o;
+		
+		String query = "delete from menu_stock where menu_id = "
+		+ m.getMenuId();
+		
+		try {
+			Statement statement = con.createStatement();
+			statement.executeUpdate(query);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+		String query2 = "delete from menu where menu_id = "
+		+ m.getMenuId();
+		
+		try {
+		Statement statement = con.createStatement();
+		statement.executeUpdate(query2);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
