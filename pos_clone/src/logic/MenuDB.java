@@ -74,20 +74,23 @@ public class MenuDB extends DatabaseAbstract implements DataProvider {
 		try {
 			Menu e = (Menu) o;
 			if (e == null) return false;
-			Statement statement;
-
-			statement = con.createStatement();
-
+			Statement statement = con.createStatement();
+			
 			String query = "insert into menu values (menu_s.nextval, " 
 					+ "'" + e.getShopId() +"'" + ","
 					+ "'" + e.getMenuName() +"'" + ","
 					+ "'" + e.getMenuPrice() + "'" + ")";
-
-			final int SUCCESSFULLY_INSERTED = 1;
-			if (statement.executeUpdate(query) == SUCCESSFULLY_INSERTED) {
-				statement.close();
-				return true;
-			}
+			
+			String query2 = "insert into menu_stock values (menu_stock_s.nextval, " 
+					+  "menu_s.currval" + ","
+					+  e.getShopId() + ","
+					+ 0 + ")";
+			
+			statement.executeUpdate(query);
+			statement.executeUpdate(query2);
+			
+			statement.close();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -119,33 +122,48 @@ public class MenuDB extends DatabaseAbstract implements DataProvider {
 
 	@Override
 	public boolean delete(Object o) {
+		try {
+		Statement statement = con.createStatement();
 		Menu m = (Menu) o;
 		
 		String query = "delete from menu_stock where menu_id = "
 		+ m.getMenuId();
 		
-		try {
-			Statement statement = con.createStatement();
-			statement.executeUpdate(query);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		
 		String query2 = "delete from menu where menu_id = "
 		+ m.getMenuId();
 		
-		try {
-		Statement statement = con.createStatement();
+		statement.executeUpdate(query);
 		statement.executeUpdate(query2);
+		
+		return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return false;
 	}
 
 	@Override
 	public long getMaxId() {
-		// TODO Auto-generated method stub
+		try {
+			long maxId = 0;
+			String query = "select max(menu_id) from menu";
+			PreparedStatement preparedStatement = con.prepareStatement(query);
+			ResultSet cursor = preparedStatement.executeQuery();
+			
+			while(cursor.next()) {
+				maxId = cursor.getInt(1);
+			}
+
+			preparedStatement.close();
+			cursor.close();
+			
+			if (maxId == 0) return 1;
+			return maxId;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return 0;
 	}
 }

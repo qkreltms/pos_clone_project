@@ -2,9 +2,11 @@ package ui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import logic.MenuDB;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.beans.value.ChangeListener;
@@ -20,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+import logic.DBConnection;
 import logic.MenuDB;
 import logic.ShopDB;
 import logic.StockDB;
@@ -102,15 +105,24 @@ public class ModifyController implements Initializable{
 		return listView;
 	}
 
-
 	@FXML public void moveToPrev(ActionEvent event) throws IOException {
+		commit();
+
 		Parent nextPage = FXMLLoader.load(this.getClass().getResource("index.fxml"));
 		Scene nextPageScene = new Scene(nextPage);
 		Stage thisStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		thisStage.setScene(nextPageScene);
 		thisStage.show();
 	}
-	
+
+	private void commit() {
+		try {
+			DBConnection.getConnection().commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	//버튼 클릭시 option 값 설정.
 	@FXML public void update(ActionEvent event) {
 		option = UPDATE;
@@ -121,15 +133,28 @@ public class ModifyController implements Initializable{
 	}
 
 	@FXML public void add(ActionEvent event) {
-		option = ADD;
+		StockDB s = new StockDB();
+		s.getAllData();
+		if (!choice_box.getSelectionModel().isEmpty()) {
+			DataProvider dp = new MenuDB();
+			//빈 껍때기 넣어줌
+			menu = new Menu("", 0, 0);
+			new Dialog().disply(menu);
+			
+			//TODO : 제대로된 널값처리하기 (아무 값도 안받고 종료될 때)
+			if(menu.getMenuPrice() != 0) {
+				dp.insert(menu);
+				listView = 	setList(shop);
+			}
+		}
 	}
 
 	private void modify(Menu menu) {
 		DataProvider dp = new MenuDB();
-		
+
 		switch(option) {
 		case UPDATE :
-			new Dialog().displyUpdete(menu);
+			new Dialog().disply(menu);
 			dp.update(menu);
 			listView = 	setList(shop);
 			break;
@@ -137,16 +162,11 @@ public class ModifyController implements Initializable{
 			dp.delete(menu);
 			listView = 	setList(shop);
 			break;
-		case ADD :
-			new Dialog().displyUpdete(menu);
-			dp.update(menu);
-			listView = 	setList(shop);
-			break;
 		default : 
 			break;
 		}
 	}
-	
+
 	public void setModifiedMenuFromDialog(Menu menu) {
 		this.menu = menu;
 	}

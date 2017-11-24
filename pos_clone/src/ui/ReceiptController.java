@@ -202,13 +202,14 @@ public class ReceiptController implements Initializable{
 				}
 			}
 		});
+		
 		HBox hbox27 = new HBox();
 		hbox27.getChildren().add(btn);
 		hbox27.setAlignment(Pos.TOP_CENTER);
 		gridPane.add(hbox27, 0, 17, 2, 1);
 		
 		startVoice();
-		
+		//TODO : 재고에 영향받게 만들기
 	}
 	
 	private void commit() {

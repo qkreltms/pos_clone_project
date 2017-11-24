@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Label;
 import java.io.IOException;
 
 import javafx.event.ActionEvent;
@@ -8,9 +9,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import logic.MenuDB;
+import model.DataProvider;
 import model.Menu;
 
 public class Dialog implements EventHandler<ActionEvent>{
@@ -20,7 +26,7 @@ public class Dialog implements EventHandler<ActionEvent>{
 	TextField tfShopId;
 	Stage window = null;
 	
-	public void displyUpdete(Menu item) {
+	public void disply(Menu item) {
 		this.item = item;
 		window = new Stage();
 		
@@ -33,11 +39,32 @@ public class Dialog implements EventHandler<ActionEvent>{
 		tfShopId = new TextField(item.getShopId() + ""); //TODO choice box로 선택하는 것으로 바꾸기
 		
 		Button btnOK = new Button("OK");
+		Button btnCancle = new Button("Cancle");
 		btnOK.setOnAction(this); 
-
+		btnCancle.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				window.hide();
+			}
+		});
+		
 		VBox layout = new VBox();
-		layout.getChildren().addAll(tfName, tfPrice, tfShopId, btnOK);
-		Scene scene = new Scene(layout);
+		layout.getChildren().addAll(tfName, tfPrice, tfShopId, btnOK, btnCancle);
+		
+		Text lbName = new Text("name");
+		Text lbPrice = new Text("price");
+		Text lbShopId = new Text("shop id");
+		lbName.setFont(Font.font(20));
+		lbPrice.setFont(Font.font(20));
+		lbShopId.setFont(Font.font(20));
+		
+		VBox layoutForText = new VBox();
+		layoutForText.getChildren().addAll(lbName, lbPrice, lbShopId);
+		
+		HBox container = new HBox();
+		container.getChildren().addAll(layoutForText, layout);
+		
+		Scene scene = new Scene(container);
 		window.setScene(scene);
 		window.showAndWait();
 	}

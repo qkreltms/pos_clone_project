@@ -122,14 +122,16 @@ public class StockController implements Initializable {
 		Label labelCtn;
 		ArrayList<Integer> btnItem;
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public void updateItem(Menu item, boolean empty) {
 			super.updateItem(item, empty);
 			if (item != null) {		
 				DataProvider dp = new StockDB();
-				@SuppressWarnings("unchecked")
+				dp.getAllData();
+				System.out.println(item.getMenuId());
 				ArrayList<Stock> stock = (ArrayList<Stock>) dp.findRecordBy(StockDB.columMenuId, item.getMenuId());
-
+				
 				if (stock != null) {
 					Label lbQuentity = new Label(String.valueOf(stock.get(0).getQuantity()));
 
