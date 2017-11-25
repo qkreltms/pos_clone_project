@@ -57,7 +57,7 @@ public class Dialog implements EventHandler<ActionEvent>{
 		lbName.setFont(Font.font(20));
 		lbPrice.setFont(Font.font(20));
 		lbShopId.setFont(Font.font(20));
-		
+		//TODO : findMax다 없애고 currval 쓰기
 		VBox layoutForText = new VBox();
 		layoutForText.getChildren().addAll(lbName, lbPrice, lbShopId);
 		

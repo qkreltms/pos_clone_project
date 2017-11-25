@@ -109,6 +109,7 @@ public class CustomerDB extends DatabaseAbstract implements DataProvider {
 	
 	public long getMaxId() {
 		try {
+			// TODO : select customer_s.currval from dual 로 바꾸기
 			String query = "select max(customer_id) from customer";
 			PreparedStatement preparedStatement = con.prepareStatement(query);
 			ResultSet cursor = preparedStatement.executeQuery();
